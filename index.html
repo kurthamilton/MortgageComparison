@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html ng-app="mortgageCalculator">
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+        <script src="app/js/controllers/CalculationController.js"></script>
+    </head>
+    <body>
+        <div ng-controller="CalculationController">
+            <div>
+                Balance
+                <input id="starting-balance" type="number" ng-model="model.balance" />
+            </div>
+            <p>
+                Mortgages
+            </p>
+            <div ng-model="mortgages">
+                <div ng-repeat="mortgage in model.mortgages">
+                    <div>
+                        APR <input type="text" ng-model="apr" />
+                    </div>
+                    <div>
+                        Fee <input type="number" ng-model="fee" />
+                        <label>
+                            <input type="checkbox" ng-model="includeFee" />
+                            Include in mortgage
+                        </label>
+                    </div>
+                    <div>
+                        Term <input type="text" ng-model="term" />
+                    </div>
+                </div>
+            </div>
+            <p>
+                Add mortgage
+            </p>
+            <div ng-model="model.newMortgage">
+                <div>
+                    APR <input type="text" ng-model="apr" />
+                </div>
+                <div>
+                    Fee <input type="number" ng-model="fee" />
+                    <label>
+                        <input type="checkbox" ng-model="includeFee" />
+                        Include in mortgage
+                    </label>
+                </div>
+                <div>
+                    Term <input type="text" ng-model="term" />
+                </div>
+                <a href="#" ng-click="actions.addMortgage()">Add</a>
+            </div>
+        </div>
+    </body>
+</html>
