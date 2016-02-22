@@ -1,8 +1,17 @@
 <!DOCTYPE html>
-<html ng-app="mortgageCalculator">
+<html ng-app="app">
     <head>
+        <!--styles-->
+        <link rel="stylesheet" href="app/css/main.css" />
+        <!--scripts-->
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
-        <script src="app/js/controllers/CalculationController.js"></script>
+        <!--app-->
+        <script src="app/js/app.module.js"></script>
+        <!--models-->
+        <script src="app/js/models/mortgage.js"></script>
+        <script src="app/js/models/comparison.js"></script>
+        <!--controllers-->
+        <script src="app/js/controllers/calculation.controller.js"></script>
     </head>
     <body>
         <div ng-controller="CalculationController">
@@ -10,44 +19,46 @@
                 Balance
                 <input id="starting-balance" type="number" ng-model="model.balance" />
             </div>
-            <p>
-                Mortgages
-            </p>
-            <div ng-model="mortgages">
-                <div ng-repeat="mortgage in model.mortgages">
-                    <div>
-                        APR <input type="text" ng-model="apr" />
-                    </div>
-                    <div>
-                        Fee <input type="number" ng-model="fee" />
-                        <label>
-                            <input type="checkbox" ng-model="includeFee" />
-                            Include in mortgage
-                        </label>
-                    </div>
-                    <div>
-                        Term <input type="text" ng-model="term" />
-                    </div>
-                </div>
-            </div>
-            <p>
-                Add mortgage
-            </p>
-            <div ng-model="model.newMortgage">
+
+            <div>
                 <div>
-                    APR <input type="text" ng-model="apr" />
+                    <a href="#" ng-click="actions.addComparison()">Add comparison</a>
                 </div>
-                <div>
-                    Fee <input type="number" ng-model="fee" />
-                    <label>
-                        <input type="checkbox" ng-model="includeFee" />
-                        Include in mortgage
-                    </label>
-                </div>
-                <div>
-                    Term <input type="text" ng-model="term" />
-                </div>
-                <a href="#" ng-click="actions.addMortgage()">Add</a>
+                <table class="comparison" ng-repeat="comparison in model.comparisons">
+                    <thead>
+                        <tr>
+                            <th>APR</th>
+                            <th>Term</th>
+                            <th>Fee</th>
+                            <th>Include fee</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="mortgage in comparison.mortgages">
+                            <td>{{mortgage.apr}}%</td>
+                            <td>{{mortgage.term}}</td>
+                            <td>{{mortgage.fee}}</td>
+                            <td>{{mortgage.includeFee}}</td>
+                        </tr>
+                    </tbody>
+                    <tfoot ng-form="newMortgageForm">
+                        <tr>
+                            <td><input type="number" class="sm" ng-model="comparison.newMortgage.apr" ng-required="true" />%</td>
+                            <td><input type="number" class="sm" ng-model="comparison.newMortgage.term" ng-required="true" /></td>
+                            <td><input type="number" class="sm" ng-model="comparison.newMortgage.fee" /></td>
+                            <td><input type="checkbox" ng-model="comparison.newMortgage.includeFee" /></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">
+                                <a href="#" type="submit" ng-click="actions.addMortgage(comparison)">Add mortgage</a>
+                                <span ng-show="comparison.submitCount > 0 && newMortgageForm.$invalid">Error</span>
+                                <pre>
+                                    {{ newMortgageForm | json }}
+                                </pre>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
             </div>
         </div>
     </body>
