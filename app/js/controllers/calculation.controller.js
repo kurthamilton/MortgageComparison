@@ -8,7 +8,6 @@
         $scope.model = {
             balance: null,
             comparisons: [],
-            comparisonStatements: {},
             duration: null,
             monthlyPayment: null
         };
@@ -37,17 +36,14 @@
         }
 
         function calculate() {
-            // todo: move into service
-            $scope.model.comparisonStatements = {};
-
             let balance = $scope.model.balance;
             let duration = $scope.model.duration;
             let monthlyPayment = $scope.model.monthlyPayment;
 
             for (let i = 0; i < $scope.model.comparisons.length; i++) {
                 let comparison = $scope.model.comparisons[i];
-                let months = CalculationService.calculateComparison(balance, comparison, duration, monthlyPayment);
-                $scope.model.comparisonStatements[i] = months;
+                let months = CalculationService.getStatement(balance, comparison, duration, monthlyPayment);
+                comparison.statement = months;
             }
         }
 

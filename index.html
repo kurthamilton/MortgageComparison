@@ -19,28 +19,22 @@
         <script src="app/js/controllers/calculation.controller.js"></script>
     </head>
     <body>
-        <header>
-
-        </header>
         <div class="container" ng-controller="CalculationController">
-            <div class="row form-inline">
-                <fieldset>
-                    <div class="form-group">
-                        <label for="starting-balance">Balance</label>
-                        <input id="starting-balance" type="number" class="form-control" ng-model="model.balance" ng-required="true" />
-                    </div>
-                    <div class="form-group">
-                        <label for="monthly-payment">Monthly payment</label>
-                        <input id="monthly-payment" type="number" class="form-control" ng-model="model.monthlyPayment" ng-required="true" />
-                    </div>
-                    <div class="form-group">
-                        <label for="months">Months</label>
-                        <input id="months" type="number" class="form-control" ng-model="model.duration" ng-required="true" />
-                    </div>
-                </fieldset>
+            <div class="row form-inline section">
+                <div class="form-group">
+                    <label for="starting-balance">Balance</label>
+                    <input id="starting-balance" type="number" class="form-control" ng-model="model.balance" ng-required="true" />
+                </div>
+                <div class="form-group">
+                    <label for="monthly-payment">Monthly payment</label>
+                    <input id="monthly-payment" type="number" class="form-control" ng-model="model.monthlyPayment" ng-required="true" />
+                </div>
+                <div class="form-group">
+                    <label for="months">Months</label>
+                    <input id="months" type="number" class="form-control" ng-model="model.duration" ng-required="true" />
+                </div>
             </div>
-
-            <div class="row">
+            <div class="row section">
                 <fieldset>
                     <div>
                         <a href="#" ng-click="actions.addComparison()">Add comparison</a>
@@ -51,7 +45,7 @@
                                 <th>APR</th>
                                 <th>Term</th>
                                 <th>Fee</th>
-                                <th>Include fee</th>
+                                <th>Include</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -84,11 +78,24 @@
                     <button class="btn btn-default" ng-click="actions.calculate()">Calculate</button>
                 </div>
             </div>
-            <div>
+            <div class="row section">
+                <table class="comparison pull-left" ng-repeat="comparison in model.comparisons">
+                    <thead>
+                        <tr>
+                            <th>Month</th>
+                            <th>Balance</th>
+                            <th>Payment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="month in comparison.statement">
+                            <td>{{month.index}}</td>
+                            <td>{{month.finishingBalance | number: 2}}</td>
+                            <td>{{month.totalPayment | number: 2}}</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-            <pre>
-                {{ model.comparisonStatements | json }}
-            </pre>
         </div>
     </body>
 </html>

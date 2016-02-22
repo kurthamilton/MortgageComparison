@@ -9,6 +9,7 @@
             this.startingBalance = startingBalance;
             this.finishingBalance = startingBalance;
             this.payment = 0;
+            this.totalPayment = 0;
         }
     }
 })();
