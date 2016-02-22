@@ -6,9 +6,11 @@
 
     function CalculationController($scope, Comparison, Mortgage, CalculationService) {
         $scope.model = {
-            balance: 0,
+            balance: null,
             comparisons: [],
-            comparisonStatements: {}
+            comparisonStatements: {},
+            duration: null,
+            monthlyPayment: null
         };
 
         $scope.actions = {
@@ -39,8 +41,8 @@
             $scope.model.comparisonStatements = {};
 
             let balance = $scope.model.balance;
-            let duration = 50;
-            let monthlyPayment = 500;
+            let duration = $scope.model.duration;
+            let monthlyPayment = $scope.model.monthlyPayment;
 
             for (let i = 0; i < $scope.model.comparisons.length; i++) {
                 let comparison = $scope.model.comparisons[i];
