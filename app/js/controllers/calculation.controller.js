@@ -1,18 +1,20 @@
 (function() {
     'use strict';
 
-    CalculationController.$inject = ['$scope', 'Comparison', 'Mortgage'];
+    CalculationController.$inject = ['$scope', 'Comparison', 'Mortgage', 'CalculationService'];
     angular.module('app').controller('CalculationController', CalculationController);
 
-    function CalculationController($scope, Comparison, Mortgage) {
+    function CalculationController($scope, Comparison, Mortgage, CalculationService) {
         $scope.model = {
             balance: 0,
-            comparisons: []
+            comparisons: [],
+            comparisonStatements: {}
         };
 
         $scope.actions = {
             addComparison: addComparison,
-            addMortgage: addMortgage
+            addMortgage: addMortgage,
+            calculate: calculate
         };
 
         addComparison();
@@ -30,6 +32,21 @@
             }
             comparison.addMortgage(comparison.newMortgage);
             prepareComparison(comparison);
+        }
+
+        function calculate() {
+            // todo: move into service
+            $scope.model.comparisonStatements = {};
+
+            let balance = $scope.model.balance;
+            let duration = 50;
+            let monthlyPayment = 500;
+
+            for (let i = 0; i < $scope.model.comparisons.length; i++) {
+                let comparison = $scope.model.comparisons[i];
+                let months = CalculationService.calculateComparison(balance, comparison, duration, monthlyPayment);
+                $scope.model.comparisonStatements[i] = months;
+            }
         }
 
         function prepareComparison(comparison) {

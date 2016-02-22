@@ -8,23 +8,27 @@
         <!--app-->
         <script src="app/js/app.module.js"></script>
         <!--models-->
-        <script src="app/js/models/mortgage.js"></script>
+        <script src="app/js/models/calculator.js"></script>
         <script src="app/js/models/comparison.js"></script>
+        <script src="app/js/models/month.js"></script>
+        <script src="app/js/models/mortgage.js"></script>
+        <!--services-->
+        <script src="app/js/services/calculation.service.js"></script>
         <!--controllers-->
         <script src="app/js/controllers/calculation.controller.js"></script>
     </head>
     <body>
         <div ng-controller="CalculationController">
-            <div>
+            <section>
                 Balance
-                <input id="starting-balance" type="number" ng-model="model.balance" />
-            </div>
+                <input id="starting-balance" type="number" ng-model="model.balance" ng-required="true" />
+            </section>
 
-            <div>
+            <section>
                 <div>
                     <a href="#" ng-click="actions.addComparison()">Add comparison</a>
                 </div>
-                <table class="comparison" ng-repeat="comparison in model.comparisons">
+                <table class="inline-table" ng-repeat="comparison in model.comparisons">
                     <thead>
                         <tr>
                             <th>APR</th>
@@ -52,14 +56,17 @@
                             <td colspan="4">
                                 <a href="#" type="submit" ng-click="actions.addMortgage(comparison)">Add mortgage</a>
                                 <span ng-show="comparison.submitCount > 0 && newMortgageForm.$invalid">Error</span>
-                                <pre>
-                                    {{ newMortgageForm | json }}
-                                </pre>
                             </td>
                         </tr>
                     </tfoot>
                 </table>
-            </div>
+            </section>
+
+            <section>
+                <button ng-click="actions.calculate()">Calculate</button>
+
+                {{ model.comparisonStatements | json }}
+            </section>
         </div>
     </body>
 </html>

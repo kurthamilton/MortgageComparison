@@ -3,7 +3,10 @@ input.sm {
     width: 50px;
 }
 
-/* comparisons */
-.comparison {
+table.inline-table {
     float: left;
+}
+
+section:after {
+    clear: both;
 }

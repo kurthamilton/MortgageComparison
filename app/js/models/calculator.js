@@ -1,18 +1,14 @@
-'use strict';
-
-var app = window.app || {};
-
 (function() {
-    MortgageCalculator.Calculator = class Calculator {
-        constructor(balance) {
+    'use strict';
+
+    angular.module('app').factory('Calculator', () => Calculator);
+
+    class Calculator {
+        constructor(balance, comparisons) {
             this.monthlyPayments = [];
-            this.mortgages = [];
+            this.comparisons = comparisons;
             this.startingBalance = balance > 0 ? -1 * balance : balance;
             this.finishingBalance = this.startingBalance;
-        }
-
-        addMortgage(apr, fee, includeFee, term) {
-            this.mortgages.push(new MortgageCalculator.Mortgage(apr, fee, includeFee, term));
         }
 
         calculate(months, monthlyPayment) {
@@ -48,10 +44,6 @@ var app = window.app || {};
                     }
                 }
             }
-        }
-
-        reset() {
-            this.monthlyPayments = [];
         }
     }
 })();
