@@ -5,11 +5,11 @@
     angular.module('app').service('CalculationService', CalculationService);
 
     function CalculationService(StatementPeriod) {
-        this.getStatement = function(balance, comparison, monthlyPayment) {
+        this.getMonthlyPayments = function(balance, comparison, monthlyPayment) {
             let statement = [];
             let totalSpend = 0;
 
-            if (comparison.mortgages.length == 0) {
+            if (comparison.mortgages.length == 0 || monthlyPayment <= 0) {
                 return statement;
             }
 

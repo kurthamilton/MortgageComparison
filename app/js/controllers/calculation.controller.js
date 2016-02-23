@@ -44,7 +44,7 @@
 
             for (let i = 0; i < $scope.model.comparisons.length; i++) {
                 let comparison = $scope.model.comparisons[i];
-                let months = CalculationService.getStatement(balance, comparison, monthlyPayment);
+                let months = CalculationService.getMonthlyPayments(balance, comparison, monthlyPayment);
                 $scope.data.statements.push(months);
             }
 
