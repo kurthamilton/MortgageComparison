@@ -18,6 +18,10 @@
             this.term = mortgage.term;
         }
 
+        get monthlyRate() {
+            return this.apr / 100 / 12;
+        }
+
         valid() {
             return this.apr > 0;
         }
