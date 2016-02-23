@@ -13,7 +13,8 @@ input.sm {
 
 /* app */
 .comparison {
-    padding-right: 20px;
+    background-color: #E6E8EC;
+    margin-right: 20px;
 }
 .comparison td, .comparison th {
     padding: 5px;

@@ -7,9 +7,5 @@
         constructor() {
             this.mortgages = [];
         }
-
-        addMortgage(mortgage) {
-            this.mortgages.push(mortgage);
-        }
     }
 })();

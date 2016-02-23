@@ -31,20 +31,19 @@
             if (!comparison.newMortgage.valid()) {
                 return false;
             }
-            comparison.addMortgage(comparison.newMortgage);
+            comparison.mortgages.push(comparison.newMortgage);
             prepareComparison(comparison);
         }
 
         function calculate() {
             let balance = $scope.model.balance;
-            let duration = $scope.model.duration;
             let monthlyPayment = $scope.model.monthlyPayment;
 
             $scope.data.statements = [];
 
             for (let i = 0; i < $scope.model.comparisons.length; i++) {
                 let comparison = $scope.model.comparisons[i];
-                let months = CalculationService.getStatement(balance, comparison, duration, monthlyPayment);
+                let months = CalculationService.getStatement(balance, comparison, monthlyPayment);
                 $scope.data.statements.push(months);
             }
 
@@ -55,7 +54,6 @@
             return {
                 balance: null,
                 comparisons: [],
-                duration: null,
                 monthlyPayment: null
             };
         }
