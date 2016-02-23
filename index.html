@@ -70,6 +70,11 @@
                                     </tr>
                                 </tfoot>
                             </table>
+                            <div class="pull-right">
+                                <button class="btn btn-danger" ng-click="actions.deleteComparison($index)">
+                                    Delete
+                                </button>
+                            </div>
                         </div>
                     </fieldset>
                 </div>
@@ -86,14 +91,16 @@
                             <tr>
                                 <th>Month</th>
                                 <th>Balance</th>
+                                <th>Total Spend</th>
                                 <th>Spend</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="month in statement">
-                                <td>{{month.index}}</td>
-                                <td>{{month.finishingBalance | number: 0}}</td>
-                                <td>{{month.cumulativeSpend | number: 0}}</td>
+                            <tr ng-repeat="period in statement">
+                                <td>{{period.index}}</td>
+                                <td>{{period.finishingBalance | number: 0}}</td>
+                                <td>{{period.cumulativeSpend | number: 0}}</td>
+                                <td>{{period.spend | number: 0}}</td>
                             </tr>
                         </tbody>
                     </table>

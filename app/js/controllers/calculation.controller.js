@@ -10,7 +10,8 @@
             actions: {
                 addComparison: addComparison,
                 addMortgage: addMortgage,
-                calculate: calculate
+                calculate: calculate,
+                deleteComparison: deleteComparison
             },
             data: {
                 statements: []
@@ -48,6 +49,12 @@
             }
 
             saveModel();
+        }
+
+        function deleteComparison(index) {
+            if (index >= 0 && index < $scope.model.comparisons.length) {
+                $scope.model.comparisons.splice(index, 1);
+            }
         }
 
         function getDefaultModel() {

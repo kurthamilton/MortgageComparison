@@ -11,6 +11,10 @@
                 let comparisonMonth = 0;
                 let totalSpend = 0;
 
+                if (comparison.mortgages.length == 0) {
+                    return statement;
+                }
+
                 // todo - validate / handle silly values to prevent infinite loop
                 while (balance > 0) {
                     for (let i = 0; i < comparison.mortgages.length; i++) {
