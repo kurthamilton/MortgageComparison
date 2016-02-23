@@ -18,16 +18,16 @@
                         let month = new Month(comparisonMonth, balance);
                         let payment = 0;
 
-                        if (mortgageMonth === 0) {
+                        if (mortgageMonth === 0 && mortgage.fee !== undefined) {
                             if (mortgage.includeFee === true) {
-                                balance -= mortgage.fee;
+                                balance += mortgage.fee;
                             } else {
                                 payment = mortgage.fee;
                             }
                         }
 
                         balance += (balance * (mortgage.apr / 100 / 12));
-                        balance += monthlyPayment;
+                        balance -= monthlyPayment;
                         month.finishingBalance = balance;
 
                         payment += monthlyPayment;

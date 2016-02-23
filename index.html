@@ -15,71 +15,74 @@
         <script src="app/js/models/mortgage.js"></script>
         <!--services-->
         <script src="app/js/services/calculation.service.js"></script>
+        <script src="app/js/services/storage.service.js"></script>
         <!--controllers-->
         <script src="app/js/controllers/calculation.controller.js"></script>
     </head>
     <body>
         <div class="container" ng-controller="CalculationController">
-            <div class="row form-inline section">
-                <div class="form-group">
-                    <label for="starting-balance">Balance</label>
-                    <input id="starting-balance" type="number" class="form-control" ng-model="model.balance" ng-required="true" />
-                </div>
-                <div class="form-group">
-                    <label for="monthly-payment">Monthly payment</label>
-                    <input id="monthly-payment" type="number" class="form-control" ng-model="model.monthlyPayment" ng-required="true" />
-                </div>
-                <div class="form-group">
-                    <label for="months">Months</label>
-                    <input id="months" type="number" class="form-control" ng-model="model.duration" ng-required="true" />
-                </div>
-            </div>
-            <div class="row section">
-                <fieldset>
-                    <div>
-                        <a href="#" ng-click="actions.addComparison()">Add comparison</a>
+            <form>
+                <div class="row form-inline section">
+                    <div class="form-group">
+                        <label for="starting-balance">Balance</label>
+                        <input id="starting-balance" type="number" class="form-control" ng-model="model.balance" required min="1" />
                     </div>
-                    <table class="comparison pull-left" ng-repeat="comparison in model.comparisons">
-                        <thead>
-                            <tr>
-                                <th>APR</th>
-                                <th>Term</th>
-                                <th>Fee</th>
-                                <th>Include</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="mortgage in comparison.mortgages">
-                                <td>{{mortgage.apr}}%</td>
-                                <td>{{mortgage.term}}</td>
-                                <td>{{mortgage.fee}}</td>
-                                <td>{{mortgage.includeFee}}</td>
-                            </tr>
-                        </tbody>
-                        <tfoot ng-form="newMortgageForm">
-                            <tr>
-                                <td><input type="number" class="form-control sm" placeholder="%" ng-model="comparison.newMortgage.apr" ng-required="true" /></td>
-                                <td><input type="number" class="form-control sm" ng-model="comparison.newMortgage.term" ng-required="true" /></td>
-                                <td><input type="number" class="form-control sm" ng-model="comparison.newMortgage.fee" /></td>
-                                <td><input type="checkbox" class="checkbox" ng-model="comparison.newMortgage.includeFee" /></td>
-                            </tr>
-                            <tr>
-                                <td colspan="4">
-                                    <a href="#" ng-click="actions.addMortgage(comparison)">Add mortgage</a>
-                                    <span ng-show="comparison.submitCount > 0 && newMortgageForm.$invalid">Error</span>
-                                </td>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </fieldset>
-            </div>
-            <div class="row">
-                <div class="form-group">
-                    <button class="btn btn-default" ng-click="actions.calculate()">Calculate</button>
+                    <div class="form-group">
+                        <label for="monthly-payment">Monthly payment</label>
+                        <input id="monthly-payment" type="number" class="form-control" ng-model="model.monthlyPayment" required min="1" />
+                    </div>
+                    <div class="form-group">
+                        <label for="months">Months</label>
+                        <input id="months" type="number" class="form-control" ng-model="model.duration" required min="1" />
+                    </div>
                 </div>
-            </div>
+                <div class="row section">
+                    <fieldset>
+                        <div>
+                            <a href="#" ng-click="actions.addComparison()">Add comparison</a>
+                        </div>
+                        <table class="comparison pull-left" ng-repeat="comparison in model.comparisons">
+                            <thead>
+                                <tr>
+                                    <th>APR</th>
+                                    <th>Term</th>
+                                    <th>Fee</th>
+                                    <th>Include</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="mortgage in comparison.mortgages">
+                                    <td>{{mortgage.apr}}%</td>
+                                    <td>{{mortgage.term}}</td>
+                                    <td>{{mortgage.fee}}</td>
+                                    <td>{{mortgage.includeFee}}</td>
+                                </tr>
+                            </tbody>
+                            <tfoot ng-form="newMortgageForm">
+                                <tr>
+                                    <td><input type="number" step="any" class="form-control sm" placeholder="%" ng-model="comparison.newMortgage.apr" /></td>
+                                    <td><input type="number" class="form-control sm" ng-model="comparison.newMortgage.term" /></td>
+                                    <td><input type="number" class="form-control sm" ng-model="comparison.newMortgage.fee" /></td>
+                                    <td><input type="checkbox" class="checkbox" ng-model="comparison.newMortgage.includeFee" /></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="4">
+                                        <a href="#" ng-click="actions.addMortgage(comparison)">Add mortgage</a>
+                                        <span ng-show="comparison.submitCount > 0 && newMortgageForm.$invalid">Error</span>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </fieldset>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <button class="btn btn-default" type="submit" ng-click="actions.calculate()">Calculate</button>
+                    </div>
+                </div>
+            </form>
             <div class="row section">
-                <table class="comparison pull-left" ng-repeat="comparison in model.comparisons">
+                <table class="comparison pull-left" ng-repeat="statement in data.statements">
                     <thead>
                         <tr>
                             <th>Month</th>
@@ -88,10 +91,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="month in comparison.statement">
+                        <tr ng-repeat="month in statement">
                             <td>{{month.index}}</td>
-                            <td>{{month.finishingBalance | number: 2}}</td>
-                            <td>{{month.totalPayment | number: 2}}</td>
+                            <td>{{month.finishingBalance | number: 0}}</td>
+                            <td>{{month.totalPayment | number: 0}}</td>
                         </tr>
                     </tbody>
                 </table>
