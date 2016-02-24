@@ -23,6 +23,11 @@
 
                     let mortgage = comparison.mortgages[i];
 
+                    if (i === comparison.mortgages.length - 1 && mortgage.monthlyRate > (monthlyPayment / balance)) {
+                        console.log('infinite mortgage encountered');
+                        return statement;
+                    }
+
                     // repeat term-less mortgages until balance = 0
                     let term = mortgage.term > 0 ? mortgage.term : Infinity;
                     for (let mortgageMonth = 0; mortgageMonth < term; mortgageMonth++) {
@@ -54,6 +59,12 @@
                             return statement;
                         }
                     }
+                }
+
+                // get out to prevent infinite loop - this shouldn't be reachable with proper validation
+                if (statement.length === 0 || statement.length > 10 && balance > statement[0].startingBalance) {
+                    console.log('monthly payments cannot be calculated');
+                    return statement;
                 }
             }
         };
