@@ -18,31 +18,26 @@
         <script src="app/js/models/statement-period.js"></script>
         <!--services-->
         <script src="app/js/services/calculation.service.js"></script>
+        <script src="app/js/services/form.service.js"></script>
         <script src="app/js/services/storage.service.js"></script>
         <!--controllers-->
         <script src="app/js/controllers/calculation.controller.js"></script>
     </head>
     <body>
         <div class="container" ng-controller="CalculationController">
-            <form name="form">
-                <div form-group form-name="form" control-name="test">
-                </div>
+            <form name="form" novalidate>
                 <div class="row form-inline section">
-                    <div class="form-group required" ng-class="{ 'has-error': form.balance.$touched && form.balance.$invalid }">
+                    <div class="form-group required" ng-class="{ 'has-error': showError(form.balance) }">
                         <label for="balance">Balance</label>
                         <input name="balance" type="number" class="form-control"
-                            ng-model="model.balance" required />
-                        <div ng-show="form.balance.$touched" ng-messages="form.balance.$error" role="alert">
-                            <span class="text-danger field-validation-error" ng-message="required">Required</span>
-                        </div>
+                            ng-model="model.balance" required min="1" />
+                        <span class="text-danger field-validation-error" ng-show="showError(form.balance)" >Enter a positive number</span>
                     </div>
-                    <div class="form-group" ng-class="{ 'has-error': form.monthlyPayment.$touched && form.monthlyPayment.$invalid }">
+                    <div class="form-group" ng-class="{ 'has-error': showError(form.monthlyPayment) }">
                         <label for="monthlyPayment">Monthly payment</label>
                         <input name="monthlyPayment" type="number" class="form-control"
                             ng-model="model.monthlyPayment" required  />
-                        <div ng-show="form.monthlyPayment.$touched" ng-messages="form.monthlyPayment.$error" role="alert">
-                            <span class="text-danger field-validation-error" ng-message="required">Required</span>
-                        </div>
+                        <span class="text-danger field-validation-error" ng-show="showError(form.monthlyPayment)" >Enter a positive number</span>
                     </div>
                 </div>
                 <div class="row section">
