@@ -10,6 +10,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-messages/1.4.9/angular-messages.min.js"></script>
         <!--app-->
         <script src="app/js/app.module.js"></script>
+        <!--directives-->
+        <script src="app/js/directives/form.group.directive.js"></script>
         <!--models-->
         <script src="app/js/models/comparison.js"></script>
         <script src="app/js/models/mortgage.js"></script>
@@ -23,6 +25,8 @@
     <body>
         <div class="container" ng-controller="CalculationController">
             <form name="form">
+                <div form-group form-name="form" control-name="test">
+                </div>
                 <div class="row form-inline section">
                     <div class="form-group required" ng-class="{ 'has-error': form.balance.$touched && form.balance.$invalid }">
                         <label for="balance">Balance</label>
