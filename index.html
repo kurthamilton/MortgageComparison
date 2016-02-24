@@ -5,7 +5,9 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
         <link rel="stylesheet" href="app/css/main.css" />
         <!--scripts-->
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+        <!--framework-->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-messages/1.4.9/angular-messages.min.js"></script>
         <!--app-->
         <script src="app/js/app.module.js"></script>
         <!--models-->
@@ -20,15 +22,23 @@
     </head>
     <body>
         <div class="container" ng-controller="CalculationController">
-            <form>
+            <form name="form">
                 <div class="row form-inline section">
-                    <div class="form-group">
-                        <label for="starting-balance">Balance</label>
-                        <input id="starting-balance" type="number" class="form-control" required min="1" ng-model="model.balance" />
+                    <div class="form-group required" ng-class="{ 'has-error': form.balance.$touched && form.balance.$invalid }">
+                        <label for="balance">Balance</label>
+                        <input name="balance" type="number" class="form-control"
+                            ng-model="model.balance" required />
+                        <div ng-show="form.balance.$touched" ng-messages="form.balance.$error" role="alert">
+                            <span class="text-danger field-validation-error" ng-message="required">Required</span>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="monthly-payment">Monthly payment</label>
-                        <input id="monthly-payment" type="number" class="form-control" required min="1" ng-model="model.monthlyPayment" />
+                    <div class="form-group" ng-class="{ 'has-error': form.monthlyPayment.$touched && form.monthlyPayment.$invalid }">
+                        <label for="monthlyPayment">Monthly payment</label>
+                        <input name="monthlyPayment" type="number" class="form-control"
+                            ng-model="model.monthlyPayment" required  />
+                        <div ng-show="form.monthlyPayment.$touched" ng-messages="form.monthlyPayment.$error" role="alert">
+                            <span class="text-danger field-validation-error" ng-message="required">Required</span>
+                        </div>
                     </div>
                 </div>
                 <div class="row section">
@@ -56,15 +66,38 @@
                                 </tbody>
                                 <tfoot ng-form="newMortgageForm">
                                     <tr>
-                                        <td><input type="number" step="any" class="form-control sm" placeholder="%" ng-model="comparison.newMortgage.apr" /></td>
-                                        <td><input type="number" class="form-control sm" ng-model="comparison.newMortgage.term" /></td>
-                                        <td><input type="number" class="form-control sm" ng-model="comparison.newMortgage.fee" /></td>
-                                        <td><input type="checkbox" class="checkbox" ng-model="comparison.newMortgage.includeFee" /></td>
+                                        <td>
+                                            <input type="number" name="apr" step="any" class="form-control sm" placeholder="%"
+                                                ng-model="comparison.newMortgage.apr" required min="0" max="100" />
+                                            <div ng-show="newMortgageForm.apr.$touched" ng-messages="newMortgageForm.apr.$error" role="alert">
+                                                <div ng-message="required">Required</div>
+                                                <div ng-message="min">Enter a percentage</div>
+                                                <div ng-message="max">Enter a percentage</div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <input type="number" name="term" class="form-control sm"
+                                                ng-model="comparison.newMortgage.term" />
+                                        </td>
+                                        <td>
+                                            <input type="number" name="fee" class="form-control sm"
+                                                ng-model="comparison.newMortgage.fee" />
+                                        </td>
+                                        <td>
+                                            <input type="checkbox" name="includeFee" class="checkbox"
+                                                ng-model="comparison.newMortgage.includeFee" />
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td colspan="4">
                                             <a href="#" ng-click="actions.addMortgage(comparison)">Add mortgage</a>
                                             <span ng-show="comparison.submitCount > 0 && newMortgageForm.$invalid">Error</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="4">
+                                            <pre>{{ newMortgageForm.apr.$error | json }}</pre>
+                                            <pre>{{ newMortgageForm.apr.$touched | json }}</pre>
                                         </td>
                                     </tr>
                                 </tfoot>

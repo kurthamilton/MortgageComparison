@@ -28,7 +28,6 @@
         }
 
         function addMortgage(comparison) {
-            comparison.submitCount++;
             if (!comparison.newMortgage.valid()) {
                 return false;
             }
@@ -91,7 +90,6 @@
 
         function prepareComparison(comparison) {
             comparison.newMortgage = new Mortgage();
-            comparison.submitCount = 0;
         }
 
         function saveModel() {

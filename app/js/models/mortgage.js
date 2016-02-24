@@ -4,18 +4,18 @@
     angular.module('app').factory('Mortgage', () => Mortgage);
 
     class Mortgage {
-        constructor(mortgage) {
-            mortgage = mortgage || {
+        constructor(options) {
+            options = options || {
                 apr: null,
                 fee: null,
                 includeFee: false,
                 term: null
             };
 
-            this.apr = mortgage.apr;
-            this.fee = mortgage.fee;
-            this.includeFee = mortgage.includeFee;
-            this.term = mortgage.term;
+            this.apr = options.apr;
+            this.fee = options.fee;
+            this.includeFee = options.includeFee;
+            this.term = options.term;
         }
 
         get monthlyRate() {
