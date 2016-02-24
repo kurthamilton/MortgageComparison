@@ -68,11 +68,7 @@
                                         <td>
                                             <input type="number" name="apr" step="any" class="form-control sm" placeholder="%"
                                                 ng-model="comparison.newMortgage.apr" required min="0" max="100" />
-                                            <div ng-show="newMortgageForm.apr.$touched" ng-messages="newMortgageForm.apr.$error" role="alert">
-                                                <div ng-message="required">Required</div>
-                                                <div ng-message="min">Enter a percentage</div>
-                                                <div ng-message="max">Enter a percentage</div>
-                                            </div>
+                                            <span class="text-danger field-validation-error" ng-show="showError(newMortgageForm.apr)" >Enter a percentage</span>
                                         </td>
                                         <td>
                                             <input type="number" name="term" class="form-control sm"
@@ -90,7 +86,6 @@
                                     <tr>
                                         <td colspan="4">
                                             <a href="#" ng-click="actions.addMortgage(comparison)">Add mortgage</a>
-                                            <span ng-show="comparison.submitCount > 0 && newMortgageForm.$invalid">Error</span>
                                         </td>
                                     </tr>
                                 </tfoot>

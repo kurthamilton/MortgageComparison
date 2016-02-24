@@ -31,6 +31,7 @@
         }
 
         function addMortgage(comparison) {
+            validateNewMortgage(comparison);
             if (!comparison.newMortgage.valid()) {
                 return false;
             }
@@ -93,10 +94,15 @@
 
         function prepareComparison(comparison) {
             comparison.newMortgage = new Mortgage();
+            comparison.newMortgage.touched = false;
         }
 
         function saveModel() {
             StorageService.set('model', $scope.model);
+        }
+
+        function validateNewMortgage(comparison) {
+            comparison.newMortgage.touched = true;
         }
     }
 })();
