@@ -18,14 +18,12 @@
                 statements: []
             },
             model: loadModel(),
-            clean: function(form) {
-                ValidationService.cleanElementState(form);
-            },
             showError: function(element) {
                 return ValidationService.showError(element);
             },
-            validate: function(form) {
-                return ValidationService.validate(form);
+            validation: {
+                canAddMortgage: canAddMortgage,
+                canDeleteComparison: canDeleteComparison
             }
         });
 
@@ -38,7 +36,6 @@
         }
 
         function addMortgage(comparison) {
-            validateNewMortgage(comparison);
             if (!comparison.newMortgage.valid()) {
                 return false;
             }
@@ -58,6 +55,17 @@
                 let statement = CalculationService.getMonthlyPayments(balance, comparison, monthlyPayment);
                 $scope.data.statements.push(statement);
             }
+        }
+
+        function canAddMortgage(comparison) {
+            return comparison.hasIndefiniteMortgage() === false;
+        }
+
+        function canDeleteComparison(comparison) {
+            if ($scope.model.comparisons.length === 1) {
+                return false;
+            }
+            return true;
         }
 
         function deleteComparison(index) {
@@ -84,15 +92,17 @@
             let model = getDefaultModel();
             let savedModel = StorageService.get('model');
             if (savedModel !== null) {
-                model = angular.extend(model, savedModel);
-
+                angular.extend(model, savedModel);
                 // reload objects
-                for (let i = 0; i < model.comparisons.length; i++) {
-                    let comparison = model.comparisons[i];
-                    for (let m = 0; m < comparison.mortgages.length; m++) {
-                        comparison.mortgages[m] = new Mortgage(comparison.mortgages[m]);
+                model.comparisons = [];
+                for (let i = 0; i < savedModel.comparisons.length; i++) {
+                    let savedComparison = savedModel.comparisons[i];
+                    let comparison = new Comparison();
+                    for (let m = 0; m < savedComparison.mortgages.length; m++) {
+                        comparison.mortgages.push(new Mortgage(savedComparison.mortgages[m]));
                     }
                     prepareComparison(comparison);
+                    model.comparisons.push(comparison);
                 }
             }
             return model;
@@ -100,15 +110,10 @@
 
         function prepareComparison(comparison) {
             comparison.newMortgage = new Mortgage();
-            comparison.newMortgage.touched = false;
         }
 
         function saveModel() {
             return StorageService.set('model', $scope.model);
-        }
-
-        function validateNewMortgage(comparison) {
-            comparison.newMortgage.touched = true;
         }
     }
 })();

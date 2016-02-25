@@ -18,6 +18,10 @@
             this.term = options.term;
         }
 
+        get isIndefinite() {
+            return !this.term;
+        }
+
         get monthlyRate() {
             return this.apr / 100 / 12;
         }

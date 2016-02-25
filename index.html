@@ -27,7 +27,7 @@
     </head>
     <body>
         <div class="container" ng-controller="CalculationController">
-            <form name="form" novalidate ng-submit="actions.save() && validate(form) && actions.calculate()">
+            <form name="form" novalidate ng-submit="actions.save() && form.$valid && actions.calculate()">
                 <div class="row form-inline section">
                     <div class="form-group required" ng-class="{ 'has-error': showError(form.balance) }">
                         <label for="balance">Balance</label>
@@ -44,6 +44,7 @@
                 </div>
                 <div class="section row">
                     <fieldset>
+                        <legend>Comparisons</legend>
                         <div>
                             <a href="#" ng-click="actions.addComparison()">
                                 <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
@@ -70,11 +71,10 @@
                                         </tr>
                                     </tbody>
                                     <tfoot ng-form="newMortgageForm" isolate-form>
-                                        <tr>
+                                        <tr ng-if="validation.canAddMortgage(comparison)">
                                             <td>
                                                 <input type="number" name="apr" step="any" class="form-control sm"
                                                     ng-model="comparison.newMortgage.apr" required min="0" max="100" />
-                                                <span class="text-danger field-validation-error" ng-show="showError(newMortgageForm.apr)" >Enter a percentage</span>
                                             </td>
                                             <td>
                                                 <input type="number" name="term" class="form-control sm"
@@ -89,17 +89,15 @@
                                                     ng-model="comparison.newMortgage.includeFee" />
                                             </td>
                                         </tr>
-                                        <tr>
-                                            <td colspan="4">
-                                                <a href="#" ng-click="actions.addMortgage(comparison) && clean(newMortgageForm.apr)">Add mortgage</a>
-                                            </td>
-                                        </tr>
                                     </tfoot>
                                 </table>
-                                <div class="pull-right">
-                                    <button class="btn btn-danger" ng-click="actions.deleteComparison($index)">
-                                        Delete
-                                    </button>
+                                <div class="buffer-top-xs pull-left" ng-if="validation.canAddMortgage(comparison)">
+                                    <a href="#" ng-click="actions.addMortgage(comparison)">Add mortgage</a>
+                                </div>
+                                <div class="buffer-top-xs pull-right" ng-if="validation.canDeleteComparison(comparison)">
+                                    <a href="#" class="text-danger" ng-click="actions.deleteComparison($index)">
+                                        <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+                                    </a>
                                 </div>
                             </div>
                         </div>
