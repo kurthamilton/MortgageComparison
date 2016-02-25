@@ -1,10 +1,10 @@
 (function() {
     'use strict';
 
-    CalculationController.$inject = ['$scope', 'Comparison', 'Mortgage', 'CalculationService', 'FormService', 'StorageService'];
+    CalculationController.$inject = ['$scope', 'Comparison', 'Mortgage', 'CalculationService', 'StorageService', 'ValidationService'];
     angular.module('app').controller('CalculationController', CalculationController);
 
-    function CalculationController($scope, Comparison, Mortgage, CalculationService, FormService, StorageService) {
+    function CalculationController($scope, Comparison, Mortgage, CalculationService, StorageService, ValidationService) {
 
         angular.extend($scope, {
             actions: {
@@ -19,10 +19,10 @@
             },
             model: loadModel(),
             showError: function(element) {
-                return FormService.showError(element);
+                return ValidationService.showError(element);
             },
-            validate: function(form, validationGroup) {
-                return FormService.validate(form, validationGroup);
+            validate: function(form) {
+                return ValidationService.validate(form);
             }
         });
 
