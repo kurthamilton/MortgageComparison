@@ -1,9 +1,9 @@
 (function() {
     'use strict';
 
-    angular.module('app').directive('isolatedForm', IsolatedForm);
+    angular.module('app').directive('isolateForm', IsolateForm);
 
-    function IsolatedForm() {
+    function IsolateForm() {
         return {
             restrict: 'A',
             require: '?form',

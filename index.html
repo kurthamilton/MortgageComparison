@@ -12,7 +12,7 @@
         <script src="app/js/app.module.js"></script>
         <!--directives-->
         <script src="app/js/directives/form.group.directive.js"></script>
-        <script src="app/js/directives/isolated.form.directive.js"></script>
+        <script src="app/js/directives/isolate.form.directive.js"></script>
         <!--models-->
         <script src="app/js/models/comparison.js"></script>
         <script src="app/js/models/mortgage.js"></script>
@@ -45,62 +45,63 @@
                 <div class="section row">
                     <fieldset>
                         <div>
-                            <a href="#" ng-click="actions.addComparison()">Add comparison</a>
+                            <a href="#" ng-click="actions.addComparison()">
+                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                Add comparison
+                            </a>
                         </div>
-                        <div class="comparison pull-left" ng-repeat-start="comparison in model.comparisons">
-                            <table class="table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>APR</th>
-                                        <th>Term</th>
-                                        <th>Fee</th>
-                                        <th>Include</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="mortgage in comparison.mortgages">
-                                        <td>{{mortgage.apr}}%</td>
-                                        <td>{{mortgage.term}}</td>
-                                        <td>{{mortgage.fee}}</td>
-                                        <td>{{mortgage.includeFee}}</td>
-                                    </tr>
-                                </tbody>
-                                <tfoot ng-form="newMortgageForm" isolated-form>
-                                    <tr>
-                                        <td>
-                                            <input type="number" name="apr" step="any" class="form-control sm" placeholder="%"
-                                                ng-model="comparison.newMortgage.apr" required min="0" max="100" />
-                                            <span class="text-danger field-validation-error" ng-show="showError(newMortgageForm.apr)" >Enter a percentage</span>
-                                        </td>
-                                        <td>
-                                            <input type="number" name="term" class="form-control sm"
-                                                ng-model="comparison.newMortgage.term" />
-                                        </td>
-                                        <td>
-                                            <input type="number" name="fee" class="form-control sm"
-                                                ng-model="comparison.newMortgage.fee" />
-                                        </td>
-                                        <td>
-                                            <input type="checkbox" name="includeFee" class="checkbox"
-                                                ng-model="comparison.newMortgage.includeFee" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td colspan="4">
-                                            <a href="#" ng-click="actions.addMortgage(comparison)">Add mortgage</a>
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                            <div class="pull-right">
-                                <button class="btn btn-danger" ng-click="actions.deleteComparison($index)">
-                                    Delete
-                                </button>
+                        <div class="comparisons">
+                            <div class="comparison" ng-repeat="comparison in model.comparisons">
+                                <table class="table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>APR</th>
+                                            <th>Term</th>
+                                            <th>Fee</th>
+                                            <th>Include</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="mortgage in comparison.mortgages">
+                                            <td>{{mortgage.apr}}%</td>
+                                            <td>{{mortgage.term}}</td>
+                                            <td>{{mortgage.fee}}</td>
+                                            <td>{{mortgage.includeFee}}</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot ng-form="newMortgageForm" isolate-form>
+                                        <tr>
+                                            <td>
+                                                <input type="number" name="apr" step="any" class="form-control sm"
+                                                    ng-model="comparison.newMortgage.apr" required min="0" max="100" />
+                                                <span class="text-danger field-validation-error" ng-show="showError(newMortgageForm.apr)" >Enter a percentage</span>
+                                            </td>
+                                            <td>
+                                                <input type="number" name="term" class="form-control sm"
+                                                    ng-model="comparison.newMortgage.term" />
+                                            </td>
+                                            <td>
+                                                <input type="number" name="fee" class="form-control sm"
+                                                    ng-model="comparison.newMortgage.fee" />
+                                            </td>
+                                            <td>
+                                                <input type="checkbox" name="includeFee" class="checkbox"
+                                                    ng-model="comparison.newMortgage.includeFee" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="4">
+                                                <a href="#" ng-click="actions.addMortgage(comparison)">Add mortgage</a>
+                                            </td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                                <div class="pull-right">
+                                    <button class="btn btn-danger" ng-click="actions.deleteComparison($index)">
+                                        Delete
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="clearfix" ng-if="$index%2==1">
-                        </div>
-                        <div ng-repeat-end="">
                         </div>
                     </fieldset>
                 </div>
