@@ -18,6 +18,9 @@
                 statements: []
             },
             model: loadModel(),
+            clean: function(form) {
+                ValidationService.cleanElementState(form);
+            },
             showError: function(element) {
                 return ValidationService.showError(element);
             },
@@ -41,6 +44,7 @@
             }
             comparison.mortgages.push(comparison.newMortgage);
             prepareComparison(comparison);
+            return true;
         }
 
         function calculate() {
