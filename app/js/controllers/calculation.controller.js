@@ -11,7 +11,8 @@
                 addComparison: addComparison,
                 addMortgage: addMortgage,
                 calculate: calculate,
-                deleteComparison: deleteComparison
+                deleteComparison: deleteComparison,
+                save: saveModel
             },
             data: {
                 statements: []
@@ -19,6 +20,9 @@
             model: loadModel(),
             showError: function(element) {
                 return FormService.showError(element);
+            },
+            validate: function(form, validationGroup) {
+                return FormService.validate(form, validationGroup);
             }
         });
 
@@ -50,8 +54,6 @@
                 let months = CalculationService.getMonthlyPayments(balance, comparison, monthlyPayment);
                 $scope.data.statements.push(months);
             }
-
-            saveModel();
         }
 
         function deleteComparison(index) {
@@ -98,7 +100,7 @@
         }
 
         function saveModel() {
-            StorageService.set('model', $scope.model);
+            return StorageService.set('model', $scope.model);
         }
 
         function validateNewMortgage(comparison) {

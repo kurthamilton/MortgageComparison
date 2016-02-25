@@ -15,10 +15,11 @@
         set(key, state) {
             if (state === undefined) {
                 window.localStorage.removeItem(key);
-                return;
+                return false;
             }
             let data = angular.toJson(state);
             window.localStorage.setItem(key, data);
+            return true;
         }
     }
 })();

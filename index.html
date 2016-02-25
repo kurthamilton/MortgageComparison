@@ -25,12 +25,12 @@
     </head>
     <body>
         <div class="container" ng-controller="CalculationController">
-            <form name="form" novalidate>
+            <form name="form" novalidate ng-submit="actions.save() && validate(form) && actions.calculate()">
                 <div class="row form-inline section">
                     <div class="form-group required" ng-class="{ 'has-error': showError(form.balance) }">
                         <label for="balance">Balance</label>
                         <input name="balance" type="number" class="form-control"
-                            ng-model="model.balance" required min="1" />
+                            ng-model="model.balance" required />
                         <span class="text-danger field-validation-error" ng-show="showError(form.balance)" >Enter a positive number</span>
                     </div>
                     <div class="form-group" ng-class="{ 'has-error': showError(form.monthlyPayment) }">
@@ -100,7 +100,7 @@
                 </div>
                 <div class="row">
                     <div class="form-group">
-                        <button class="btn btn-default" type="submit" ng-click="actions.calculate()">Calculate</button>
+                        <button class="btn btn-default" type="submit">Calculate</button>
                     </div>
                 </div>
             </form>

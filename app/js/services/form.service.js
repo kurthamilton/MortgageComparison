@@ -5,7 +5,11 @@
 
     function FormService() {
         this.showError = function(element) {
-            return element.$touched && element.$invalid;
+            return element.$invalid && (element.$touched || element.$$parentForm.$submitted);
+        }
+        this.validate = function(form, validationGroup) {
+            form.$setSubmitted();
+            return form.$valid;
         }
     }
 })();
