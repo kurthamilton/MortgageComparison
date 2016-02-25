@@ -16,6 +16,7 @@
         <!--models-->
         <script src="app/js/models/comparison.js"></script>
         <script src="app/js/models/mortgage.js"></script>
+        <script src="app/js/models/statement.js"></script>
         <script src="app/js/models/statement-period.js"></script>
         <!--services-->
         <script src="app/js/services/calculation.service.js"></script>
@@ -41,12 +42,12 @@
                         <span class="text-danger field-validation-error" ng-show="showError(form.monthlyPayment)" >Enter a positive number</span>
                     </div>
                 </div>
-                <div class="row section">
+                <div class="section row">
                     <fieldset>
                         <div>
                             <a href="#" ng-click="actions.addComparison()">Add comparison</a>
                         </div>
-                        <div class="comparison pull-left" ng-repeat="comparison in model.comparisons">
+                        <div class="comparison pull-left" ng-repeat-start="comparison in model.comparisons">
                             <table class="table-striped">
                                 <thead>
                                     <tr>
@@ -97,6 +98,10 @@
                                 </button>
                             </div>
                         </div>
+                        <div class="clearfix" ng-if="$index%2==1">
+                        </div>
+                        <div ng-repeat-end="">
+                        </div>
                     </fieldset>
                 </div>
                 <div class="row">
@@ -117,7 +122,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="period in statement">
+                            <tr ng-repeat="period in statement.periods">
                                 <td>{{$index}}</td>
                                 <td>{{period.finishingBalance | number: 0}}</td>
                                 <td>{{period.cumulativeSpend | number: 0}}</td>
