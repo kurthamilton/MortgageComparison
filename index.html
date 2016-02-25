@@ -12,6 +12,7 @@
         <script src="app/js/app.module.js"></script>
         <!--directives-->
         <script src="app/js/directives/form.group.directive.js"></script>
+        <script src="app/js/directives/isolated.form.directive.js"></script>
         <!--models-->
         <script src="app/js/models/comparison.js"></script>
         <script src="app/js/models/mortgage.js"></script>
@@ -25,7 +26,7 @@
     </head>
     <body>
         <div class="container" ng-controller="CalculationController">
-            <form name="form" novalidate ng-submit="actions.save() && validate(form) && actions.calculate()">
+            <form name="form" novalidate ng-submit="actions.save() && validate(form) && actions.calculate()" data-isolated-form>
                 <div class="row form-inline section">
                     <div class="form-group required" ng-class="{ 'has-error': showError(form.balance) }">
                         <label for="balance">Balance</label>
@@ -63,7 +64,7 @@
                                         <td>{{mortgage.includeFee}}</td>
                                     </tr>
                                 </tbody>
-                                <tfoot ng-form="newMortgageForm">
+                                <tfoot ng-form="newMortgageForm" data-isolated-form>
                                     <tr>
                                         <td>
                                             <input type="number" name="apr" step="any" class="form-control sm" placeholder="%"
