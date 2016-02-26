@@ -8,6 +8,7 @@
         <!--framework-->
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-messages/1.4.9/angular-messages.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
         <!--app-->
         <script src="app/js/app.module.js"></script>
         <!--directives-->
@@ -27,7 +28,9 @@
     </head>
     <body>
         <div class="container" ng-controller="CalculationController">
-            <form name="form" novalidate ng-submit="actions.save() && form.$valid && actions.calculate()">
+            <!-- form -->
+            <form name="form" novalidate ng-submit="actions.save() && form.$valid && actions.calculate() && actions.showChart()">
+                <!-- global mortgage details -->
                 <div class="row form-inline section">
                     <div class="form-group required" ng-class="{ 'has-error': showError(form.balance) }">
                         <label for="balance">Balance</label>
@@ -42,6 +45,7 @@
                         <span class="text-danger field-validation-error" ng-show="showError(form.monthlyPayment)" >Enter a positive number</span>
                     </div>
                 </div>
+                <!-- comparisons -->
                 <div class="section row">
                     <fieldset>
                         <legend>Comparisons</legend>
@@ -103,13 +107,20 @@
                         </div>
                     </fieldset>
                 </div>
+                <!-- submit -->
                 <div class="row">
                     <div class="form-group">
-                        <button class="btn btn-default" type="submit">Calculate</button>
+                        <button class="btn btn-default">Calculate</button>
                     </div>
                 </div>
             </form>
-            <div class="row section">
+            <!-- results -->
+            <div class="row section" ng-show="data.statements.length > 0">
+                <!-- chart -->
+                <div>
+                    <canvas id="myChart" width="400" height="400"></canvas>
+                </div>
+                <!-- table -->
                 <div class="comparison pull-left" ng-repeat="statement in data.statements">
                     <table class="table-striped">
                         <thead>
