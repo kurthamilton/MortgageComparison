@@ -71,6 +71,8 @@
                     var period = new StatementPeriod(statement.balance);
                 }
                 period.spend += month.spend;
+                statement.totalSpend += month.spend;
+                statement.balance = month.finishingBalance;
                 if (i % 12 === 11 || i === monthlyStatement.periods.length - 1) {
                     statement.addPeriod(period);
                     if (i === monthlyStatement.periods.length - 1) {
