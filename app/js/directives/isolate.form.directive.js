@@ -1,14 +1,12 @@
 (function() {
     'use strict';
 
-    angular.module('app').directive('isolateForm', IsolateForm);
+    angular.module('app').directive('isolateForm', () => new IsolateForm());
 
     function IsolateForm() {
-        return {
-            restrict: 'A',
-            require: '?form',
-            link: link
-        };
+        this.restrict = 'A';
+        this.require = '?form';
+        this.link = link;
 
         function link (scope, element, attrs, controller) {
             if (!controller) {
