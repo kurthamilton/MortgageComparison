@@ -22,8 +22,7 @@
                 return ValidationService.showError(element);
             },
             validation: {
-                canAddMortgage: canAddMortgage,
-                canDeleteComparison: canDeleteComparison
+                canAddMortgage: canAddMortgage
             }
         });
 
@@ -52,20 +51,13 @@
 
             for (let i = 0; i < $scope.model.comparisons.length; i++) {
                 let comparison = $scope.model.comparisons[i];
-                let statement = CalculationService.getMonthlyPayments(balance, comparison, monthlyPayment);
+                let statement = CalculationService.getYearlyPayments(balance, comparison, monthlyPayment);
                 $scope.data.statements.push(statement);
             }
         }
 
         function canAddMortgage(comparison) {
             return comparison.hasIndefiniteMortgage() === false;
-        }
-
-        function canDeleteComparison(comparison) {
-            if ($scope.model.comparisons.length === 1) {
-                return false;
-            }
-            return true;
         }
 
         function deleteComparison(index) {
