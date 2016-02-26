@@ -33,13 +33,12 @@
                     // repeat term-less mortgages until balance = 0
                     let term = mortgage.term > 0 ? mortgage.term : Infinity;
                     for (let mortgageMonth = 0; mortgageMonth < term; mortgageMonth++) {
-                        let period = new StatementPeriod(statement.balance);
+                        let period = new StatementPeriod(statement);
                         if (mortgageMonth === 0) {
-                            period.spend += statement.startMortgage(mortgage.fee, mortgage.includeFee);
+                            period.addFee(mortgage.fee, mortgage.includeFee)
                         }
-
-                        statement.addInterest(mortgage.monthlyRate);
-                        period.spend += statement.makePayment(monthlyPayment);
+                        period.addInterest(mortgage.monthlyRate);
+                        period.makePayment(monthlyPayment);
                         statement.addPeriod(period);
 
                         if (statement.balance === 0) {
@@ -49,40 +48,45 @@
                 }
 
                 // get out to prevent infinite loop - this shouldn't be reachable with proper validation
-                if (statement.periodCount === 0 || statement.periodCount > 10 && statement.balance > statement.startingBalance) {
+                if (statement.periods.length === 0 || statement.periods.length > 10 && statement.balance > statement.startingBalance) {
                     console.log('monthly payments cannot be calculated');
                     return statement;
                 }
             }
-        };
+        }
 
         function getYearlyPayments(balance, comparison, monthlyPayment) {
-            let monthlyStatement = getMonthlyPayments(balance, comparison, monthlyPayment);
-            if (!monthlyStatement) {
+            let statement = getMonthlyPayments(balance, comparison, monthlyPayment);
+            return getAggregatedStatement(statement, 12);
+        }
+
+        function getAggregatedStatement(statementToAggregate, numberOfMonths) {
+            if (!statementToAggregate) {
                 return null;
             }
 
-            let statement = new Statement(balance);
-            let i = 0;
-            while (i < monthlyStatement.periods.length) {
-                let month = monthlyStatement.periods[i];
-
-                if (i % 12 === 0) {
-                    var period = new StatementPeriod(statement.balance);
-                }
-                period.spend += month.spend;
-                statement.totalSpend += month.spend;
-                statement.balance = month.finishingBalance;
-                if (i % 12 === 11 || i === monthlyStatement.periods.length - 1) {
-                    statement.addPeriod(period);
-                    if (i === monthlyStatement.periods.length - 1) {
-                        return statement;
-                    }
-                }
-
-                i++;
+            let periods = angular.copy(statementToAggregate.periods);
+            let statement = new Statement(statementToAggregate.startingBalance);
+            while (periods.length > 0) {
+                addAggregatePeriod(statement, periods.splice(0, numberOfMonths))
             }
-        };
-    }
+            return statement;
+        }
 
+        function addAggregatePeriod(statement, periods) {
+            if (!periods || periods.length === 0) {
+                return null;
+            }
+
+            let period = new StatementPeriod(statement);
+            for (let i = 0; i < periods.length; i++) {
+                let sourcePeriod = periods[i];
+                period.addSpend(sourcePeriod.spend);
+                if (i === periods.length - 1) {
+                    statement.balance = sourcePeriod.finishingBalance;
+                }
+            }
+            statement.addPeriod(period);
+        }
+    }
 })();
