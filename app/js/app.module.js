@@ -1,5 +1,5 @@
 (function() {
     'use strict';
 
-    angular.module('app', ['ngMessages']);
+    angular.module('app', ['chart.js']);
 })();

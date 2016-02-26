@@ -24,7 +24,6 @@
                     }
 
                     let mortgage = comparison.mortgages[i];
-
                     if (!mortgage.term && mortgage.monthlyRate > (monthlyPayment / statement.balance)) {
                         console.log('infinite mortgage encountered');
                         return null;

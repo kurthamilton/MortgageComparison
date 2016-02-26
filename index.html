@@ -3,12 +3,13 @@
     <head>
         <!--styles-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="app/css/lib/angular-chart.min.css" />
         <link rel="stylesheet" href="app/css/main.css" />
         <!--scripts-->
         <!--framework-->
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-messages/1.4.9/angular-messages.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
+        <script src="app/js/lib/angular-chart.min.js"></script>
         <!--app-->
         <script src="app/js/app.module.js"></script>
         <!--directives-->
@@ -29,7 +30,7 @@
     <body>
         <div class="container" ng-controller="CalculationController">
             <!-- form -->
-            <form name="form" novalidate ng-submit="actions.save() && form.$valid && actions.calculate() && actions.showChart()">
+            <form name="form" novalidate ng-submit="actions.save() && form.$valid && actions.calculate() && actions.updateChartData()">
                 <!-- global mortgage details -->
                 <div class="row form-inline section">
                     <div class="form-group required" ng-class="{ 'has-error': showError(form.balance) }">
@@ -118,7 +119,9 @@
             <div class="row section" ng-show="data.statements.length > 0">
                 <!-- chart -->
                 <div>
-                    <canvas id="myChart" width="400" height="400"></canvas>
+                    <canvas id="chart" class="chart chart-line"
+                        chart-data="data.chart.data" chart-labels="data.chart.labels" chart-legend="true" chart-series="data.chart.series">
+                    </canvas>
                 </div>
                 <!-- table -->
                 <div class="comparison pull-left" ng-repeat="statement in data.statements">
