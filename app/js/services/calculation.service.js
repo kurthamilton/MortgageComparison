@@ -1,14 +1,27 @@
 (function() {
     'use strict';
 
-    CalculationService.$inject = ['Statement', 'StatementPeriod'];
+    CalculationService.$inject = ['Statement', 'StatementPeriod', 'StorageService'];
     angular.module('app').service('CalculationService', CalculationService);
 
-    function CalculationService(Statement, StatementPeriod) {
+    function CalculationService(Statement, StatementPeriod, StorageService) {
+        let service = this;
+
+        const cacheKey = 'CalculationService.model';
+
+        this.model = load() || {
+            balance: null,
+            monthlyPayment: null
+        };
+
         this.getMonthlyPayments = getMonthlyPayments;
         this.getYearlyPayments = getYearlyPayments;
+        this.save = save;
 
-        function getMonthlyPayments(balance, comparison, monthlyPayment) {
+        function getMonthlyPayments(comparison) {
+            let balance = service.model.balance;
+            let monthlyPayment = service.model.monthlyPayment;
+
             // todo - validate / handle silly values to prevent infinite loop
             if (comparison.mortgages.length == 0 || balance <= 0 || monthlyPayment <= 0) {
                 return null;
@@ -30,7 +43,7 @@
                     }
 
                     // repeat term-less mortgages until balance = 0
-                    let term = mortgage.term > 0 ? mortgage.term : Infinity;
+                    let term = mortgage.term > 0 ? mortgage.term * 12 : Infinity;
                     for (let mortgageMonth = 0; mortgageMonth < term; mortgageMonth++) {
                         let period = new StatementPeriod(statement);
                         if (mortgageMonth === 0) {
@@ -86,6 +99,22 @@
                 }
             }
             statement.addPeriod(period);
+        }
+
+        function load() {
+            let saved = StorageService.get(cacheKey);
+            if (!saved) {
+                return null;
+            }
+
+            return {
+                balance: saved.balance,
+                monthlyPayment: saved.monthlyPayment
+            };
+        }
+
+        function save() {
+            return StorageService.set(cacheKey, this.model);
         }
     }
 })();

@@ -22,6 +22,7 @@
         <script src="app/js/models/statement-period.js"></script>
         <!--services-->
         <script src="app/js/services/calculation.service.js"></script>
+        <script src="app/js/services/comparison.service.js"></script>
         <script src="app/js/services/storage.service.js"></script>
         <script src="app/js/services/validation.service.js"></script>
         <!--controllers-->
@@ -36,13 +37,13 @@
                     <div class="form-group required" ng-class="{ 'has-error': showError(form.balance) }">
                         <label for="balance">Balance</label>
                         <input name="balance" type="number" class="form-control"
-                            ng-model="model.balance" required />
+                            ng-model="model.calculation.balance" required />
                         <span class="text-danger field-validation-error" ng-show="showError(form.balance)" >Enter a positive number</span>
                     </div>
                     <div class="form-group" ng-class="{ 'has-error': showError(form.monthlyPayment) }">
                         <label for="monthlyPayment">Monthly payment</label>
                         <input name="monthlyPayment" type="number" class="form-control"
-                            ng-model="model.monthlyPayment" required  />
+                            ng-model="model.calculation.monthlyPayment" required  />
                         <span class="text-danger field-validation-error" ng-show="showError(form.monthlyPayment)" >Enter a positive number</span>
                     </div>
                 </div>
