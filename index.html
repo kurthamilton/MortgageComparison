@@ -60,11 +60,18 @@
                         </div>
                         <div class="comparisons">
                             <div class="comparison" ng-repeat="comparison in model.comparisons">
+                                <div class="form-inline">
+                                    <div class="form-group">
+                                        <label for="" class="control-label">Overpay</label>
+                                        <input type="number" class="form-control sm" min="0"
+                                            ng-model="comparison.monthlyOverpayment" />
+                                    </div>
+                                </div>
                                 <table class="table-striped">
                                     <thead>
                                         <tr>
                                             <th>APR</th>
-                                            <th>Term</th>
+                                            <th>Years</th>
                                             <th>Fee</th>
                                             <th>Include</th>
                                         </tr>

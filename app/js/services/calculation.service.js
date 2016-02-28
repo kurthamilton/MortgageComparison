@@ -43,6 +43,7 @@
                         }
                         period.addInterest(mortgage.monthlyRate);
                         period.makePayment(monthlyPayment);
+                        period.makePayment(comparison.monthlyOverpayment);
                         statement.addPeriod(period);
 
                         if (statement.balance === 0) {

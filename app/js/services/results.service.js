@@ -6,7 +6,11 @@
 
     function ResultsService(CalculationService) {
         let results = {
-            chart: {},
+            chart: {
+                data: [],
+                labels: [],
+                series: []
+            },
             statements: []
         };
 
@@ -17,7 +21,7 @@
 
         function update(options) {
             calculate(options);
-            updateChartData();
+            buildChart();
         }
 
         function calculate(options) {
@@ -29,15 +33,29 @@
             });
         }
 
-        function updateChartData() {
-            results.chart = {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
-                series: ['Series A', 'Series B'],
-                data: [
-                    [65, 59, 80, 81, 56, 55, 40],
-                    [28, 48, 40, 19, 86, 27, 90]
-                ]
-            };
+        function buildChart() {
+            let data = [],
+                labels = [],
+                series = [];
+
+            angular.forEach(results.statements, function(statement, serie) {
+                if (statement) {
+                    series.push(serie + 1);
+
+                    let seriesData = [];
+                    angular.forEach(statement.periods, function(period, i) {
+                        if (i > labels.length - 1) {
+                            labels.push(i);
+                        }
+                        seriesData.push(period.cumulativeSpend);
+                    });
+                    data.push(seriesData);
+                }
+            });
+
+            results.chart.data = data;
+            results.chart.labels = labels;
+            results.chart.series = series;
         }
     }
 })();

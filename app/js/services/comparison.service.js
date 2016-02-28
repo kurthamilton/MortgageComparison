@@ -51,14 +51,14 @@
                 return null;
             }
 
-            let comparisons = [];
-            angular.forEach(saved, function(value) {
-                let comparison = create();
-                comparison.mortgages = parseMortgages(value.mortgages);
-                comparisons.push(comparison);
-            });
+            return saved.map(object => parse(object));
+        }
 
-            return comparisons;
+        function parse(object) {
+            let comparison = create();
+            comparison.monthlyOverpayment = object.monthlyOverpayment;
+            comparison.mortgages = parseMortgages(object.mortgages);
+            return comparison;
         }
 
         // todo: MortgageService

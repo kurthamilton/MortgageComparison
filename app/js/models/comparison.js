@@ -5,6 +5,7 @@
 
     class Comparison {
         constructor() {
+            this.monthlyOverpayment = 0;
             this.mortgages = [];
         }
 
