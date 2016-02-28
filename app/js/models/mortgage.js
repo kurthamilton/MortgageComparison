@@ -28,6 +28,20 @@
             return this.apr / 100 / 12;
         }
 
+        toString() {
+            let description = `${this.apr}%`;
+            if (this.term > 0) {
+                description += `;${this.term} years`
+            }
+            if (this.fee > 0) {
+                description += `;${this.fee} fee`
+            }
+            if (this.overpayment > 0) {
+                description += `;${this.overpayment} overpayment`
+            }
+            return description;
+        }
+
         valid() {
             return this.apr > 0;
         }

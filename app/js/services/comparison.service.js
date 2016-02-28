@@ -5,46 +5,53 @@
     angular.module('app').service('ComparisonService', ComparisonService);
 
     function ComparisonService(Mortgage, StorageService) {
-        let service = this;
+        const cacheKey = 'ComparisonService.model';
 
-        const cacheKey = 'ComparisonService.mortgages';
-        
-        let mortgages = load() || [];
+        let model = {
+            balance: null,
+            mortgages: [],
+            newMortgage: new Mortgage(),
+            payment: null
+        }
 
-        angular.extend(service, {
-           mortgages: mortgages,
-           newMortgage: new Mortgage(),
+        angular.extend(this, {
+           model: model,
            add: add,
            remove: remove,
            save: save
         });
 
+        load();
+
         function add() {
-            let mortgage = service.newMortgage;
-            if (!mortgage.valid()) {
+            if (!model.newMortgage.valid()) {
                 return false;
             }
-            mortgages.push(new Mortgage(service.newMortgage));
-            service.newMortgage.apr = null;
+            model.mortgages.push(model.newMortgage);
+            model.newMortgage = new Mortgage();
         }
 
         function load() {
             let saved = StorageService.get(cacheKey);
-            if (!angular.isArray(saved)) {
-                return null;
+            if (!saved) {
+                return;
             }
 
-            return saved.map(object => new Mortgage(object));
+            angular.extend(model, {
+                balance: saved.balance,
+                mortgages: saved.mortgages.map(m => new Mortgage(m)),
+                payment: saved.payment
+            });
         }
 
         function remove(index) {
-            if (index >= 0 && index < mortgages.length) {
-                mortgages.splice(index, 1);
+            if (index >= 0 && index < model.mortgages.length) {
+                model.mortgages.splice(index, 1);
             }
         }
 
         function save() {
-            return StorageService.set(cacheKey, mortgages);
+            return StorageService.set(cacheKey, model);
         }
     }
 })();

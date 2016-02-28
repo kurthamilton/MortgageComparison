@@ -51,78 +51,76 @@
                 <div class="section row">
                     <fieldset>
                         <legend>Mortgages</legend>
-                        <div class="mortgages">
-                            <table class="table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>APR</th>
-                                        <th>Years</th>
-                                        <th>Fee</th>
-                                        <th>Add to balance</th>
-                                        <th>Overpayment</th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr ng-repeat="mortgage in model.mortgages">
-                                        <td>
-                                            <input type="number" name="apr" step="any" class="form-control"
-                                                ng-model="mortgage.apr" required min="0" max="100" />
-                                        </td>
-                                        <td>
-                                            <input type="number" name="term" class="form-control"
-                                                ng-model="mortgage.term" />
-                                        </td>
-                                        <td>
-                                            <input type="number" name="fee" class="form-control"
-                                                ng-model="mortgage.fee" />
-                                        </td>
-                                        <td>
-                                            <input type="checkbox" name="includeFee" class="checkbox"
-                                                ng-model="mortgage.includeFee" />
-                                        </td>
-                                        <td>
-                                            <input type="number" name="overpayment" class="form-control"
-                                                ng-model="mortgage.overpayment" />
-                                        </td>
-                                        <td>
-                                            <a href="#" class="text-danger" ng-click="actions.delete($index)">
-                                                <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                                <tfoot ng-form="newMortgageForm" isolate-form>
-                                    <tr>
-                                        <td>
-                                            <input type="number" name="apr" step="any" class="form-control"
-                                                ng-model="model.newMortgage.apr" required min="0" max="100" />
-                                        </td>
-                                        <td>
-                                            <input type="number" name="term" class="form-control"
-                                                ng-model="model.newMortgage.term" />
-                                        </td>
-                                        <td>
-                                            <input type="number" name="fee" class="form-control"
-                                                ng-model="model.newMortgage.fee" />
-                                        </td>
-                                        <td>
-                                            <input type="checkbox" name="includeFee" class="checkbox"
-                                                ng-model="model.newMortgage.includeFee" />
-                                        </td>
-                                        <td>
-                                            <input type="number" name="overpayment" class="form-control"
-                                                ng-model="model.mewMortgage.overpayment" />
-                                        </td>
-                                        <td>
-                                            <a href="#" ng-click="actions.add()">
-                                                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </tfoot>
-                            </table>
-                        </div>
+                        <table class="mortgages table-striped">
+                            <thead>
+                                <tr>
+                                    <th>APR</th>
+                                    <th>Years</th>
+                                    <th>Fee</th>
+                                    <th>Add to balance</th>
+                                    <th>Overpayment</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="mortgage in model.mortgages">
+                                    <td>
+                                        <input type="number" name="apr" step="any" class="form-control"
+                                            ng-model="mortgage.apr" required min="0" max="100" />
+                                    </td>
+                                    <td>
+                                        <input type="number" name="term" class="form-control"
+                                            ng-model="mortgage.term" />
+                                    </td>
+                                    <td>
+                                        <input type="number" name="fee" class="form-control"
+                                            ng-model="mortgage.fee" />
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" name="includeFee" class="checkbox"
+                                            ng-model="mortgage.includeFee" />
+                                    </td>
+                                    <td>
+                                        <input type="number" name="overpayment" class="form-control"
+                                            ng-model="mortgage.overpayment" />
+                                    </td>
+                                    <td>
+                                        <a href="#" class="text-danger" ng-click="actions.delete($index)">
+                                            <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                            <tfoot ng-form="newMortgageForm" isolate-form>
+                                <tr>
+                                    <td>
+                                        <input type="number" name="apr" step="any" class="form-control"
+                                            ng-model="model.newMortgage.apr" required min="0" max="100" />
+                                    </td>
+                                    <td>
+                                        <input type="number" name="term" class="form-control"
+                                            ng-model="model.newMortgage.term" />
+                                    </td>
+                                    <td>
+                                        <input type="number" name="fee" class="form-control"
+                                            ng-model="model.newMortgage.fee" />
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" name="includeFee" class="checkbox"
+                                            ng-model="model.newMortgage.includeFee" />
+                                    </td>
+                                    <td>
+                                        <input type="number" name="overpayment" class="form-control"
+                                            ng-model="model.mewMortgage.overpayment" />
+                                    </td>
+                                    <td>
+                                        <a href="#" ng-click="actions.add()">
+                                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tfoot>
+                        </table>
                     </fieldset>
                 </div>
                 <!-- submit -->
@@ -142,7 +140,7 @@
                 </div>
                 <!-- table -->
                 <div class="pull-left" ng-repeat="statement in results.statements">
-                    <table class="table-striped">
+                    <table class="statement table-striped">
                         <thead>
                             <tr>
                                 <th>Year</th>

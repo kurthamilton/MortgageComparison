@@ -19,18 +19,15 @@
             update: update
         });
 
-        function update(options) {
-            calculate(options);
+        function update(model) {
+            calculate(model);
             buildChart();
         }
 
-        function calculate(options) {
-            results.statements = [];
-
-            angular.forEach(options.mortgages, function(mortgage) {
-                let statement = CalculationService.getYearlyPayments(mortgage, options.balance, options.monthlyPayment);
-                results.statements.push(statement);
-            });
+        function calculate(model) {
+            results.statements = model.mortgages.map(mortgage =>
+                CalculationService.getYearlyPayments(mortgage, model.balance, model.payment)
+            );
         }
 
         function buildChart() {
@@ -38,9 +35,9 @@
                 labels = [],
                 series = [];
 
-            angular.forEach(results.statements, function(statement, serie) {
+            angular.forEach(results.statements, (statement, seriesIndex) => {
                 if (statement) {
-                    series.push(serie + 1);
+                    series.push(seriesIndex + 1);
 
                     let seriesData = [];
                     angular.forEach(statement.periods, function(period, i) {
