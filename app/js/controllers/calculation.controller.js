@@ -9,15 +9,15 @@
 
         let model = {
             balance: null,
-            comparisons: [],
-            monthlyPayment: null
+            mortgages: [],
+            monthlyPayment: null,
+            newMortgage: null
         };
 
         angular.extend($scope, {
             actions: {
-                addComparison: ComparisonService.add,
-                addMortgage: ComparisonService.addMortgage,
-                deleteComparison: ComparisonService.remove,
+                add: ComparisonService.add,
+                delete: ComparisonService.remove,
                 onSubmitted: onSubmitted
             },
             model: model,
@@ -29,7 +29,8 @@
 
         function loadModel() {
             angular.extend(model, StorageService.get(cacheKey));
-            model.comparisons = ComparisonService.comparisons;
+            model.mortgages = ComparisonService.mortgages;
+            model.newMortgage = ComparisonService.newMortgage;
         }
 
         function onSubmitted(form) {

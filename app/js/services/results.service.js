@@ -27,8 +27,8 @@
         function calculate(options) {
             results.statements = [];
 
-            angular.forEach(options.comparisons, function(comparison) {
-                let statement = CalculationService.getYearlyPayments(comparison, options.balance, options.monthlyPayment);
+            angular.forEach(options.mortgages, function(mortgage) {
+                let statement = CalculationService.getYearlyPayments(mortgage, options.balance, options.monthlyPayment);
                 results.statements.push(statement);
             });
         }

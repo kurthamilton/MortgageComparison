@@ -32,6 +32,10 @@
         }
 
         makePayment(payment) {
+            if (!angular.isNumber(payment)) {
+                return;
+            }
+
             if (payment > this.statement.balance) {
                 payment = this.statement.balance;
             }

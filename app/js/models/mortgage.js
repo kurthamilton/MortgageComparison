@@ -9,12 +9,14 @@
                 apr: null,
                 fee: null,
                 includeFee: false,
+                overpayment: null,
                 term: null
             };
 
             this.apr = options.apr;
             this.fee = options.fee;
             this.includeFee = options.includeFee;
+            this.overpayment = options.overpayment;
             this.term = options.term;
         }
 
