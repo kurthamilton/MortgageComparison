@@ -5,28 +5,29 @@
     angular.module('app').service('ComparisonService', ComparisonService);
 
     function ComparisonService(Comparison, Mortgage, StorageService) {
-        let service = this;
-
         const cacheKey = 'ComparisonService.comparisons';
 
-        this.comparisons = load() || [];
+        let comparisons = load() || [];
 
-        this.add = add;
-        this.addMortgage = addMortgage;
-        this.remove = remove;
-        this.save = save;
+        angular.extend(this, {
+           comparisons: comparisons,
+           add: add,
+           addMortgage: addMortgage,
+           remove: remove,
+           save: save
+        });
 
         init();
 
         function add() {
-            service.comparisons.push(create());
+            comparisons.push(create());
         }
 
         function addMortgage(comparison) {
-            if (!comparison.newMortgage.valid()) {
+            if (!comparison.newMortgage.valid() || !comparison.canAddMortgage()) {
                 return false;
             }
-            comparison.mortgages.push(comparison.newMortgage);
+            comparison.addMortgage(comparison.newMortgage);
             comparison.newMortgage = new Mortgage();
             return true;
         }
@@ -39,7 +40,7 @@
         }
 
         function init() {
-            if (service.comparisons.length === 0) {
+            if (comparisons.length === 0) {
                 add();
             }
         }
@@ -75,13 +76,13 @@
         }
 
         function remove(index) {
-            if (index >= 0 && index < service.comparisons.length) {
-                service.comparisons.splice(index, 1);
+            if (index >= 0 && index < comparisons.length) {
+                comparisons.splice(index, 1);
             }
         }
 
         function save() {
-            return StorageService.set(cacheKey, service.comparisons);
+            return StorageService.set(cacheKey, comparisons);
         }
     }
 })();

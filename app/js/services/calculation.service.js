@@ -1,27 +1,17 @@
 (function() {
     'use strict';
 
-    CalculationService.$inject = ['Statement', 'StatementPeriod', 'StorageService'];
+    CalculationService.$inject = ['Statement', 'StatementPeriod'];
     angular.module('app').service('CalculationService', CalculationService);
 
-    function CalculationService(Statement, StatementPeriod, StorageService) {
-        let service = this;
+    function CalculationService(Statement, StatementPeriod) {
 
-        const cacheKey = 'CalculationService.model';
+        angular.extend(this, {
+            getMonthlyPayments: getMonthlyPayments,
+            getYearlyPayments: getYearlyPayments
+        });
 
-        this.model = load() || {
-            balance: null,
-            monthlyPayment: null
-        };
-
-        this.getMonthlyPayments = getMonthlyPayments;
-        this.getYearlyPayments = getYearlyPayments;
-        this.save = save;
-
-        function getMonthlyPayments(comparison) {
-            let balance = service.model.balance;
-            let monthlyPayment = service.model.monthlyPayment;
-
+        function getMonthlyPayments(comparison, balance, monthlyPayment) {
             // todo - validate / handle silly values to prevent infinite loop
             if (comparison.mortgages.length == 0 || balance <= 0 || monthlyPayment <= 0) {
                 return null;
@@ -99,22 +89,6 @@
                 }
             }
             statement.addPeriod(period);
-        }
-
-        function load() {
-            let saved = StorageService.get(cacheKey);
-            if (!saved) {
-                return null;
-            }
-
-            return {
-                balance: saved.balance,
-                monthlyPayment: saved.monthlyPayment
-            };
-        }
-
-        function save() {
-            return StorageService.set(cacheKey, this.model);
         }
     }
 })();

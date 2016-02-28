@@ -28,6 +28,7 @@
 
         addSpend(spend) {
             this.spend += spend;
+            this.cumulativeSpend += spend;
             this.statement.totalSpend += spend;
         }
 

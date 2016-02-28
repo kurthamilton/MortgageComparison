@@ -31,19 +31,19 @@
     <body>
         <div class="container" ng-controller="CalculationController">
             <!-- form -->
-            <form name="form" novalidate ng-submit="actions.save() && form.$valid && actions.calculate() && actions.updateChartData()">
+            <form name="form" novalidate ng-submit="actions.onSubmitted(form)">
                 <!-- global mortgage details -->
                 <div class="row form-inline section">
                     <div class="form-group required" ng-class="{ 'has-error': showError(form.balance) }">
                         <label for="balance">Balance</label>
                         <input name="balance" type="number" class="form-control"
-                            ng-model="model.calculation.balance" required />
+                            ng-model="model.balance" required />
                         <span class="text-danger field-validation-error" ng-show="showError(form.balance)" >Enter a positive number</span>
                     </div>
                     <div class="form-group" ng-class="{ 'has-error': showError(form.monthlyPayment) }">
                         <label for="monthlyPayment">Monthly payment</label>
                         <input name="monthlyPayment" type="number" class="form-control"
-                            ng-model="model.calculation.monthlyPayment" required  />
+                            ng-model="model.monthlyPayment" required  />
                         <span class="text-danger field-validation-error" ng-show="showError(form.monthlyPayment)" >Enter a positive number</span>
                     </div>
                 </div>
@@ -77,7 +77,7 @@
                                         </tr>
                                     </tbody>
                                     <tfoot ng-form="newMortgageForm" isolate-form>
-                                        <tr ng-if="validation.canAddMortgage(comparison)">
+                                        <tr ng-if="comparison.canAddMortgage()">
                                             <td>
                                                 <input type="number" name="apr" step="any" class="form-control sm"
                                                     ng-model="comparison.newMortgage.apr" required min="0" max="100" />
@@ -97,7 +97,7 @@
                                         </tr>
                                     </tfoot>
                                 </table>
-                                <div class="buffer-top-xs pull-left" ng-if="validation.canAddMortgage(comparison)">
+                                <div class="buffer-top-xs pull-left" ng-if="comparison.canAddMortgage()">
                                     <a href="#" ng-click="actions.addMortgage(comparison)">Add mortgage</a>
                                 </div>
                                 <div class="buffer-top-xs pull-right">
@@ -117,19 +117,19 @@
                 </div>
             </form>
             <!-- results -->
-            <div class="row section" ng-show="data.statements.length > 0">
+            <div class="row section" ng-show="results.statements.length > 0">
                 <!-- chart -->
                 <div>
                     <canvas id="chart" class="chart chart-line"
-                        chart-data="data.chart.data" chart-labels="data.chart.labels" chart-legend="true" chart-series="data.chart.series">
+                        chart-data="results.chart.data" chart-labels="results.chart.labels" chart-legend="true" chart-series="results.chart.series">
                     </canvas>
                 </div>
                 <!-- table -->
-                <div class="comparison pull-left" ng-repeat="statement in data.statements">
+                <div class="comparison pull-left" ng-repeat="statement in results.statements">
                     <table class="table-striped">
                         <thead>
                             <tr>
-                                <th>Month</th>
+                                <th>Year</th>
                                 <th>Balance</th>
                                 <th>Total Spend</th>
                                 <th>Spend</th>

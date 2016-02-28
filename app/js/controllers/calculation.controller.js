@@ -1,57 +1,71 @@
 (function() {
     'use strict';
 
-    CalculationController.$inject = ['$scope', 'CalculationService', 'ComparisonService', 'ValidationService'];
+    CalculationController.$inject = ['$scope', 'CalculationService', 'ComparisonService', 'StorageService', 'ValidationService'];
     angular.module('app').controller('CalculationController', CalculationController);
 
-    function CalculationController($scope, CalculationService, ComparisonService, ValidationService) {
+    function CalculationController($scope, CalculationService, ComparisonService, StorageService, ValidationService) {
+        const cacheKey = 'CalculationController.model';
+
+        let model = {
+            balance: null,
+            comparisons: [],
+            monthlyPayment: null
+        };
+
+        let results = {
+            chart: {},
+            statements: []
+        };
+
         angular.extend($scope, {
             actions: {
                 addComparison: ComparisonService.add,
                 addMortgage: ComparisonService.addMortgage,
-                calculate: calculate,
                 deleteComparison: ComparisonService.remove,
-                save: saveModel,
-                updateChartData: updateChartData
+                onSubmitted: onSubmitted
             },
-            data: {
-                chart: {},
-                statements: []
-            },
-            model: {
-                // todo: auto bind to service without having to structure the $scope's model like this
-                calculation: CalculationService.model,
-                comparisons: ComparisonService.comparisons
-            },
-            showError: ValidationService.showError,
-            validation: {
-                canAddMortgage: canAddMortgage
-            }
+            model: model,
+            results: results,
+            showError: ValidationService.showError
         });
 
-        function calculate() {
-            $scope.data.statements = [];
+        loadModel();
 
-            for (let i = 0; i < $scope.model.comparisons.length; i++) {
-                let comparison = $scope.model.comparisons[i];
-                let statement = CalculationService.getYearlyPayments(comparison);
-                $scope.data.statements.push(statement);
-            }
-            return true;
+        function calculate() {
+            results.statements = [];
+
+            angular.forEach(model.comparisons, function(comparison) {
+                let statement = CalculationService.getYearlyPayments(comparison, model.balance, model.monthlyPayment);
+                results.statements.push(statement);
+            });
         }
 
-        function canAddMortgage(comparison) {
-            return comparison.hasIndefiniteMortgage() === false;
+        function loadModel() {
+            angular.extend(model, StorageService.get(cacheKey));
+            model.comparisons = ComparisonService.comparisons;
+        }
+
+        function onSubmitted(form) {
+            saveModel();
+            if (!form.$valid) {
+                return;
+            }
+            calculate();
+            updateChartData();
         }
 
         function saveModel() {
-            CalculationService.save();
             ComparisonService.save();
-            return true;
+
+            return StorageService.set(cacheKey, {
+                balance: model.balance,
+                monthlyPayment: model.monthlyPayment
+            });
         }
 
         function updateChartData() {
-            $scope.data.chart = {
+            results.chart = {
                 labels: ["January", "February", "March", "April", "May", "June", "July"],
                 series: ['Series A', 'Series B'],
                 data: [
