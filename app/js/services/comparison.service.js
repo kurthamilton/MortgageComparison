@@ -10,7 +10,6 @@
         let model = {
             balance: null,
             mortgages: [],
-            newMortgage: new Mortgage(),
             payment: null
         }
 
@@ -22,13 +21,16 @@
         });
 
         load();
+        ensureStarterMortgage();
 
         function add() {
-            if (!model.newMortgage.valid()) {
-                return false;
+            model.mortgages.push(new Mortgage());
+        }
+
+        function ensureStarterMortgage() {
+            if (model.mortgages.length === 0) {
+                add();
             }
-            model.mortgages.push(model.newMortgage);
-            model.newMortgage = new Mortgage();
         }
 
         function load() {
@@ -39,7 +41,9 @@
 
             angular.extend(model, {
                 balance: saved.balance,
-                mortgages: saved.mortgages.map(m => new Mortgage(m)),
+                mortgages: saved.mortgages
+                                .map(m => new Mortgage(m))
+                                .filter(m => m.valid()),
                 payment: saved.payment
             });
         }
@@ -47,11 +51,16 @@
         function remove(index) {
             if (index >= 0 && index < model.mortgages.length) {
                 model.mortgages.splice(index, 1);
+                ensureStarterMortgage();
             }
         }
 
         function save() {
-            return StorageService.set(cacheKey, model);
+            return StorageService.set(cacheKey, {
+                balance: model.balance,
+                mortgages: model.mortgages.filter(m => m.valid()),
+                payment: model.payment
+            });
         }
     }
 })();

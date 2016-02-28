@@ -23,7 +23,7 @@
                 return null;
             }
 
-            let statement = new Statement(balance);
+            let statement = new Statement(balance, mortgage.toString());
             // add 0-th period
             statement.addPeriod(new StatementPeriod(statement));
 
@@ -65,7 +65,7 @@
             }
 
             let periods = angular.copy(source.periods);
-            let statement = new Statement(source.startingBalance);
+            let statement = new Statement(source.startingBalance, source.description);
             // add 0-th period
             addAggregatePeriod(statement, 1);
             while (periods.length > 0) {

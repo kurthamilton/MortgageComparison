@@ -43,7 +43,7 @@
                     <div class="form-group" ng-class="{ 'has-error': showError(form.monthlyPayment) }">
                         <label for="monthlyPayment">Monthly payment</label>
                         <input name="monthlyPayment" type="number" class="form-control"
-                            ng-model="model.monthlyPayment" required  />
+                            ng-model="model.payment" required  />
                         <span class="text-danger field-validation-error" ng-show="showError(form.monthlyPayment)" >Enter a positive number</span>
                     </div>
                 </div>
@@ -51,7 +51,7 @@
                 <div class="section row">
                     <fieldset>
                         <legend>Mortgages</legend>
-                        <table class="mortgages table-striped">
+                        <table class="mortgages table table-striped">
                             <thead>
                                 <tr>
                                     <th>APR</th>
@@ -91,36 +91,10 @@
                                     </td>
                                 </tr>
                             </tbody>
-                            <tfoot ng-form="newMortgageForm" isolate-form>
-                                <tr>
-                                    <td>
-                                        <input type="number" name="apr" step="any" class="form-control"
-                                            ng-model="model.newMortgage.apr" required min="0" max="100" />
-                                    </td>
-                                    <td>
-                                        <input type="number" name="term" class="form-control"
-                                            ng-model="model.newMortgage.term" />
-                                    </td>
-                                    <td>
-                                        <input type="number" name="fee" class="form-control"
-                                            ng-model="model.newMortgage.fee" />
-                                    </td>
-                                    <td>
-                                        <input type="checkbox" name="includeFee" class="checkbox"
-                                            ng-model="model.newMortgage.includeFee" />
-                                    </td>
-                                    <td>
-                                        <input type="number" name="overpayment" class="form-control"
-                                            ng-model="model.mewMortgage.overpayment" />
-                                    </td>
-                                    <td>
-                                        <a href="#" ng-click="actions.add()">
-                                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tfoot>
                         </table>
+                        <a href="#" ng-click="actions.add()">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        </a>
                     </fieldset>
                 </div>
                 <!-- submit -->
@@ -139,8 +113,9 @@
                     </canvas>
                 </div>
                 <!-- table -->
-                <div class="pull-left" ng-repeat="statement in results.statements">
-                    <table class="statement table-striped">
+                <div class="statement pull-left" ng-repeat="statement in results.statements">
+                    <h4>{{statement.description}}</h4>
+                    <table class="table table-striped">
                         <thead>
                             <tr>
                                 <th>Year</th>

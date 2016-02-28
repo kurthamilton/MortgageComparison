@@ -35,9 +35,9 @@
                 labels = [],
                 series = [];
 
-            angular.forEach(results.statements, (statement, seriesIndex) => {
+            angular.forEach(results.statements, statement => {
                 if (statement) {
-                    series.push(seriesIndex + 1);
+                    series.push(statement.description);
 
                     let seriesData = [];
                     angular.forEach(statement.periods, function(period, i) {

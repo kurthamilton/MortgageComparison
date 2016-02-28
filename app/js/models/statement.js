@@ -4,8 +4,9 @@
     angular.module('app').factory('Statement', () => Statement);
 
     class Statement {
-        constructor(balance) {
+        constructor(balance, description) {
             this.balance = balance;
+            this.description = description;
             this.periods = [];
             this.startingBalance = balance;
             this.totalSpend = 0;
