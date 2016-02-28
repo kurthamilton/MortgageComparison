@@ -7,11 +7,12 @@
         constructor(balance) {
             this.balance = balance;
             this.periods = [];
+            this.startingBalance = balance;
             this.totalSpend = 0;
         }
 
         addPeriod(period) {
-            period.finishingBalance = this.balance;
+            period.balance = this.balance;
             this.periods.push(period);
         }
 
@@ -21,13 +22,6 @@
             }
 
             return this.periods[0];
-        }
-
-        startingBalance() {
-            if (!this.first) {
-                return 0;
-            }
-            return this.first.startingBalance;
         }
     }
 })();

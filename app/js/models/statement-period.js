@@ -6,8 +6,7 @@
     class StatementPeriod {
         constructor(statement) {
             this.cumulativeSpend = statement.totalSpend;
-            this.finishingBalance = statement.startingBalance;
-            this.startingBalance = statement.startingBalance;
+            this.balance = statement.balance;
             this.spend = 0;
             this.statement = statement;
         }

@@ -18,6 +18,8 @@
             }
 
             let statement = new Statement(balance);
+            // add 0-th period
+            statement.addPeriod(new StatementPeriod(statement));
 
             while (statement.balance > 0) {
                 for (let i = 0; i < comparison.mortgages.length; i++) {
@@ -62,13 +64,15 @@
             return getAggregatedStatement(statement, 12);
         }
 
-        function getAggregatedStatement(statementToAggregate, numberOfMonths) {
-            if (!statementToAggregate) {
+        function getAggregatedStatement(source, numberOfMonths) {
+            if (!source) {
                 return null;
             }
 
-            let periods = angular.copy(statementToAggregate.periods);
-            let statement = new Statement(statementToAggregate.startingBalance);
+            let periods = angular.copy(source.periods);
+            let statement = new Statement(source.startingBalance);
+            // add 0-th period
+            addAggregatePeriod(statement, 1);
             while (periods.length > 0) {
                 addAggregatePeriod(statement, periods.splice(0, numberOfMonths))
             }
@@ -85,7 +89,7 @@
                 let sourcePeriod = periods[i];
                 period.addSpend(sourcePeriod.spend);
                 if (i === periods.length - 1) {
-                    statement.balance = sourcePeriod.finishingBalance;
+                    statement.balance = sourcePeriod.balance;
                 }
             }
             statement.addPeriod(period);

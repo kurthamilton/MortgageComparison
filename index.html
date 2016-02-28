@@ -138,7 +138,7 @@
                         <tbody>
                             <tr ng-repeat="period in statement.periods">
                                 <td>{{$index}}</td>
-                                <td>{{period.finishingBalance | number: 0}}</td>
+                                <td>{{period.balance | number: 0}}</td>
                                 <td>{{period.cumulativeSpend | number: 0}}</td>
                                 <td>{{period.spend | number: 0}}</td>
                             </tr>
