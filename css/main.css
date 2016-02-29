@@ -41,5 +41,5 @@ td, th {
 
 /* ng-sortable overrides */
 tr.as-sortable-item, tr.as-sortable-placeholder {
-    display: table-row;
+    display: table-row !important;
 }
