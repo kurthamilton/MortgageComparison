@@ -62,8 +62,8 @@
                                     <th>APR</th>
                                     <th>Years</th>
                                     <th>Fee</th>
-                                    <th>Add to balance</th>
-                                    <th>Overpayment</th>
+                                    <th>Overpayment / term</th>
+                                    <th>Overpayment / month</th>
                                     <th></th>
                                 </tr>
                             </thead>
@@ -73,24 +73,29 @@
                                         <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
                                     </td>
                                     <td>
-                                        <input type="number" name="apr" step="any" class="form-control"
+                                        <input type="number" step="any" class="form-control"
                                             ng-model="mortgage.apr" required min="0" max="100" />
                                     </td>
                                     <td>
-                                        <input type="number" name="term" class="form-control"
+                                        <input type="number" class="form-control"
                                             ng-model="mortgage.term" />
                                     </td>
                                     <td>
-                                        <input type="number" name="fee" class="form-control"
+                                        <input type="number" class="form-control"
                                             ng-model="mortgage.fee" />
-                                    </td>
-                                    <td>
-                                            <input type="checkbox" name="includeFee" class="checkbox"
+                                        <label class="checkbox-inline" ng-show="mortgage.fee > 0">
+                                            <input type="checkbox" class="checkbox" title="Add to balance"
                                                 ng-model="mortgage.includeFee" />
+                                            Add to balance
+                                        </label>
                                     </td>
                                     <td>
-                                        <input type="number" name="overpayment" class="form-control"
-                                            ng-model="mortgage.overpayment" />
+                                        <input type="number" class="form-control"
+                                            ng-model="mortgage.lumpSumOverpayment" />
+                                    </td>
+                                    <td>
+                                        <input type="number" class="form-control"
+                                            ng-model="mortgage.monthlyOverpayment" />
                                     </td>
                                     <td>
                                         <a href="#" class="text-danger" ng-click="actions.delete($index)">

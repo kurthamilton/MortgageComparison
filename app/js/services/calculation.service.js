@@ -35,10 +35,11 @@
                     let period = new StatementPeriod(statement);
                     if (mortgageMonth === 0) {
                         period.addFee(mortgage.fee, mortgage.includeFee)
+                        period.makePayment(mortgage.lumpSumOverpayment);
                     }
                     period.addInterest(mortgage.monthlyRate);
                     period.makePayment(monthlyPayment);
-                    period.makePayment(mortgage.overpayment);
+                    period.makePayment(mortgage.monthlyOverpayment);
                     statement.addPeriod(period);
 
                     if (statement.balance === 0) {

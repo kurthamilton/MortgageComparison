@@ -9,14 +9,16 @@
                 apr: null,
                 fee: null,
                 includeFee: false,
-                overpayment: null,
+                lumpSumOverpayment: null,
+                monthlyOverpayment: null,
                 term: null
             };
 
             this.apr = options.apr;
             this.fee = options.fee;
             this.includeFee = options.includeFee;
-            this.overpayment = options.overpayment;
+            this.lumpSumOverpayment = options.lumpSumOverpayment;
+            this.monthlyOverpayment = options.monthlyOverpayment;
             this.term = options.term;
         }
 
@@ -36,8 +38,8 @@
             if (this.fee > 0) {
                 description += `; ${this.fee} fee`
             }
-            if (this.overpayment > 0) {
-                description += `; ${this.overpayment} overpayment`
+            if (this.lumpSumOverpayment > 0 || this.monthlyOverpayment > 0) {
+                description += `; +${this.lumpSumOverpayment || 0}+${this.monthlyOverpayment || 0}`
             }
             return description;
         }
