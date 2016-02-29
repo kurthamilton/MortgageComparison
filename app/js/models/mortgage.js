@@ -33,13 +33,16 @@
         toString() {
             let description = `${this.apr}%`;
             if (this.term > 0) {
-                description += `; ${this.term}y`
+                description += ` | ${this.term}y`
             }
             if (this.fee > 0) {
-                description += `; ${this.fee} fee`
+                description += ` | ${this.fee} fee`
+                if (this.includeFee === true) {
+                    description += ' (bal)';
+                }
             }
             if (this.lumpSumOverpayment > 0 || this.monthlyOverpayment > 0) {
-                description += `; +${this.lumpSumOverpayment || 0}+${this.monthlyOverpayment || 0}`
+                description += ` | +${this.lumpSumOverpayment || 0}+${this.monthlyOverpayment || 0}`
             }
             return description;
         }
