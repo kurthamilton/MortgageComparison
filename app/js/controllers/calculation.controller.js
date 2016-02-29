@@ -16,6 +16,18 @@
             showError: ValidationService.showError
         });
 
+        $scope.sortOptions = {
+            //restrict move across columns. move only within column.
+            /*accept: function (sourceItemHandleScope, destSortableScope) {
+            return sourceItemHandleScope.itemScope.sortableScope.$id === destSortableScope.$id;
+            },*/
+            itemMoved: function (event) {
+                event.source.itemScope.modelValue.status = event.dest.sortableScope.$parent.column.name;
+            },
+            orderChanged: function (event) {
+            }
+        };
+
         updateResults();
 
         function onSubmitted(form) {

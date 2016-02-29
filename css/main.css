@@ -34,3 +34,8 @@ td, th {
 .statement {
     margin-right: 10px;
 }
+
+/* ng-sortable overrides */
+tr.as-sortable-item, tr.as-sortable-placeholder {
+    display: table-row;
+}

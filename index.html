@@ -4,7 +4,8 @@
         <!--styles-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
         <link rel="stylesheet" href="css/lib/angular-chart.min.css" />
-        <link rel="stylesheet" href="app/css/main.css" />
+        <link rel="stylesheet" href="css/lib/ng-sortable.css" />
+        <link rel="stylesheet" href="css/main.css" />
         <!--scripts-->
         <!--framework-->
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
@@ -12,6 +13,7 @@
         <script src="js/lib/angles.js"></script>
         <script src="js/lib/angular-chart.js"></script>
         <script src="js/lib/chartjs-directive.js"></script>
+        <script src="js/lib/ng-sortable.js"></script>
         <!--app-->
         <script src="app/js/app.module.js"></script>
         <!--directives-->
@@ -56,6 +58,7 @@
                         <table class="mortgages table table-striped">
                             <thead>
                                 <tr>
+                                    <th></th>
                                     <th>APR</th>
                                     <th>Years</th>
                                     <th>Fee</th>
@@ -64,8 +67,11 @@
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr ng-repeat="mortgage in model.mortgages">
+                            <tbody data-as-sortable="sortOptions" data-ng-model="model.mortgages">
+                                <tr ng-repeat="mortgage in model.mortgages" data-as-sortable-item>
+                                    <td data-as-sortable-item-handle class="as-sortable-item-handle">
+                                        <span class="glyphicon glyphicon-move" aria-hidden="true"></span>
+                                    </td>
                                     <td>
                                         <input type="number" name="apr" step="any" class="form-control"
                                             ng-model="mortgage.apr" required min="0" max="100" />
@@ -79,8 +85,8 @@
                                             ng-model="mortgage.fee" />
                                     </td>
                                     <td>
-                                        <input type="checkbox" name="includeFee" class="checkbox"
-                                            ng-model="mortgage.includeFee" />
+                                            <input type="checkbox" name="includeFee" class="checkbox"
+                                                ng-model="mortgage.includeFee" />
                                     </td>
                                     <td>
                                         <input type="number" name="overpayment" class="form-control"
