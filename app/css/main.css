@@ -27,6 +27,10 @@ td, th {
 }
 
 /* app */
+.statements {
+    display: flex;
+    flex-wrap: wrap;
+}
 .statement {
     margin-right: 10px;
 }

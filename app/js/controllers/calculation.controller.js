@@ -16,16 +16,22 @@
             showError: ValidationService.showError
         });
 
+        updateResults();
+
         function onSubmitted(form) {
             saveModel();
             if (!form.$valid) {
                 return;
             }
-            ResultsService.update(ComparisonService.model);
+            updateResults();
         }
 
         function saveModel() {
             ComparisonService.save();
+        }
+
+        function updateResults() {
+            ResultsService.update(ComparisonService.model);
         }
     }
 })();

@@ -31,13 +31,13 @@
         toString() {
             let description = `${this.apr}%`;
             if (this.term > 0) {
-                description += `;${this.term} years`
+                description += `; ${this.term}y`
             }
             if (this.fee > 0) {
-                description += `;${this.fee} fee`
+                description += `; ${this.fee} fee`
             }
             if (this.overpayment > 0) {
-                description += `;${this.overpayment} overpayment`
+                description += `; ${this.overpayment} overpayment`
             }
             return description;
         }
