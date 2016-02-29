@@ -21,7 +21,7 @@
 
         function update(model) {
             calculate(model);
-            buildChart();
+            buildChartData();
         }
 
         function calculate(model) {
@@ -30,7 +30,7 @@
             );
         }
 
-        function buildChart() {
+        function buildChartData() {
             let data = [],
                 labels = [],
                 series = [];
