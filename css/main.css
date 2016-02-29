@@ -1,8 +1,4 @@
 /* layout */
-.form-inline .form-group {
-    vertical-align: top;
-}
-
 .buffer-top-xs {
     margin-top: 5px;
 }
@@ -37,6 +33,14 @@ td, th {
 }
 .statement {
     margin-right: 10px;
+}
+
+/* bootstrap overrides */
+.form-group-inline {
+    display: inline-block;
+}
+.field-validation-error {
+    position: absolute;
 }
 
 /* ng-sortable overrides */
