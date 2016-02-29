@@ -26,6 +26,7 @@
 
         function add() {
             model.mortgages.push(new Mortgage());
+            save();
         }
 
         function ensureStarterMortgage() {
@@ -52,6 +53,7 @@
         function remove(index) {
             if (index >= 0 && index < model.mortgages.length) {
                 model.mortgages.splice(index, 1);
+                save();
                 ensureStarterMortgage();
             }
         }
