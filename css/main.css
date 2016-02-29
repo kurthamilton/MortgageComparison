@@ -26,6 +26,10 @@ td, th {
     padding: 5px;
 }
 
+.table > tbody > tr > td {
+    vertical-align: middle;
+}
+
 /* app */
 .statements {
     display: flex;

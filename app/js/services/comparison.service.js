@@ -17,7 +17,8 @@
            model: model,
            add: add,
            remove: remove,
-           save: save
+           save: save,
+           validMortgages: validMortgages
         });
 
         load();
@@ -58,9 +59,13 @@
         function save() {
             return StorageService.set(cacheKey, {
                 balance: model.balance,
-                mortgages: model.mortgages.filter(m => m.valid()),
+                mortgages: validMortgages(),
                 payment: model.payment
             });
+        }
+
+        function validMortgages() {
+            return model.mortgages.filter(m => m.valid());
         }
     }
 })();

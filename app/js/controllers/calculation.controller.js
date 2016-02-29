@@ -28,7 +28,9 @@
             }
         };
 
-        updateResults();
+        if (ComparisonService.validMortgages().length > 0) {
+            updateResults();
+        }
 
         function onSubmitted(form) {
             saveModel();
