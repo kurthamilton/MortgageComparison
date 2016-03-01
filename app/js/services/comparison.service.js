@@ -16,6 +16,7 @@
         angular.extend(this, {
            model: model,
            add: add,
+           maxApr: maxApr,
            remove: remove,
            save: save,
            validMortgages: validMortgages
@@ -48,6 +49,13 @@
                                 .filter(m => m.valid()),
                 payment: saved.payment
             });
+        }
+
+        function maxApr() {
+            if (model.balance > 0 && model.payment > 0) {
+                return (model.payment / model.balance) * 12 * 100;
+            }
+            return 100;
         }
 
         function remove(index) {

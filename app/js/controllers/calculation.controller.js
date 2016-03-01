@@ -13,12 +13,7 @@
                 submit: submit
             },
             change: changeForm,
-            maxApr: function() {
-                if ($scope.model.balance > 0 && $scope.model.payment > 0) {
-                    return ($scope.model.payment / $scope.model.balance) * 12 * 100;
-                }
-                return 100;
-            },
+            maxApr: ComparisonService.maxApr,
             model: ComparisonService.model,
             results: ResultsService.results,
             showError: ValidationService.showError
