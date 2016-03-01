@@ -16,13 +16,5 @@
             period.balance = this.balance;
             this.periods.push(period);
         }
-
-        first() {
-            if (this.periods.length === 0) {
-                return null;
-            }
-
-            return this.periods[0];
-        }
     }
 })();

@@ -12,27 +12,35 @@
         }
 
         addFee(fee, addToBalance) {
-            if (fee > 0) {
-                if (addToBalance === true) {
-                    this.statement.balance += fee;
-                } else {
-                    this.addSpend(fee);
-                }
+            if (!angular.isNumber(fee) || fee <= 0) {
+                return;
+            }
+
+            if (addToBalance === true) {
+                this.statement.balance += fee;
+            } else {
+                this.addSpend(fee);
             }
         }
 
         addInterest(monthlyRate) {
+            if (!angular.isNumber(monthlyRate) || monthlyRate <= 0) {
+                return;
+            }
             this.statement.balance += (this.statement.balance * monthlyRate);
         }
 
         addSpend(spend) {
+            if (!angular.isNumber(spend) || spend <= 0) {
+                return;
+            }
             this.spend += spend;
             this.cumulativeSpend += spend;
             this.statement.totalSpend += spend;
         }
 
         makePayment(payment) {
-            if (!angular.isNumber(payment)) {
+            if (!angular.isNumber(payment) || payment <= 0) {
                 return;
             }
 

@@ -36,25 +36,28 @@
         <div class="container" ng-controller="CalculationController">
             <!-- form -->
             <form name="form" novalidate ng-submit="actions.submit()">
-                <!-- global mortgage details -->
+
                 <div class="section row form-inline">
+                    <!--Balance-->
                     <div class="form-group required" ng-class="{ 'has-error': showError(form.balance) }">
                         <label for="balance">Balance</label>
                         <div class="form-group-inline">
                             <input name="balance" type="number" class="form-control"
-                                ng-model="model.balance" required />
-                            <span class="text-danger field-validation-error" ng-show="showError(form.balance)" >Enter a positive number</span>
+                                ng-model="model.balance" required min="1" />
+                            <span class="text-danger field-validation-error" ng-show="showError(form.balance)">Enter a positive number</span>
                         </div>
                     </div>
+                    <!--Monthly payment-->
                     <div class="form-group" ng-class="{ 'has-error': showError(form.monthlyPayment) }">
                         <label for="monthlyPayment">Monthly payment</label>
                         <div class="form-group-inline">
                             <input name="monthlyPayment" type="number" class="form-control"
-                                ng-model="model.payment" required  />
-                            <span class="text-danger field-validation-error" ng-show="showError(form.monthlyPayment)" >Enter a positive number</span>
+                                ng-model="model.payment" required min="1"/>
+                            <span class="text-danger field-validation-error" ng-show="showError(form.monthlyPayment)">Enter a positive number</span>
                         </div>
                     </div>
                 </div>
+
                 <!-- mortgages -->
                 <div class="section row">
                     <fieldset>
@@ -93,18 +96,22 @@
                             </thead>
                             <tbody data-ng-model="model.mortgages" data-as-sortable>
                                 <tr ng-form="mortgageForm" ng-repeat="mortgage in model.mortgages" data-as-sortable-item>
+                                    <!--Reorder-->
                                     <td title="Reorder" class="as-sortable-item-handle" data-as-sortable-item-handle>
                                         <span class="text-muted glyphicon glyphicon-move" aria-hidden="true"></span>
                                     </td>
+                                    <!--APR-->
                                     <td class="required" ng-class="{ 'has-error': showError(mortgageForm.apr) }">
                                         <input type="number" name="apr" step="any" class="form-control"
-                                            ng-model="mortgage.apr" required min="0" max="10" />
-                                        <span class="text-danger field-validation-error" ng-show="showError(mortgageForm.apr)">Enter a positive number</span>
+                                            ng-model="mortgage.apr" required min="0" max="{{maxApr()}}" />
+                                        <span class="text-danger field-validation-error" ng-show="showError(mortgageForm.apr)">Enter a positive number not exceeding {{maxApr() | number:2}}%</span>
                                     </td>
+                                    <!--Term-->
                                     <td>
                                         <input type="number" class="form-control"
                                             ng-model="mortgage.term" />
                                     </td>
+                                    <!--Fee-->
                                     <td>
                                         <input type="number" class="form-control"
                                             ng-model="mortgage.fee" />
@@ -114,14 +121,17 @@
                                             Add to balance
                                         </label>
                                     </td>
+                                    <!--Overpayment / term-->
                                     <td>
                                         <input type="number" class="form-control"
                                             ng-model="mortgage.lumpSumOverpayment" />
                                     </td>
+                                    <!--Overpayment / month-->
                                     <td>
                                         <input type="number" class="form-control"
                                             ng-model="mortgage.monthlyOverpayment" />
                                     </td>
+                                    <!--Delete-->
                                     <td>
                                         <a href="#" class="text-danger" title="Delete" ng-click="actions.delete($index)">
                                             <span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span>
@@ -131,24 +141,29 @@
                             </tbody>
                         </table>
                     </fieldset>
+
+                    <!--New mortgage-->
                     <div class="pull-left">
                         <a href="#" ng-click="actions.add()">
                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                             New
                         </a>
                     </div>
-                    <!-- submit -->
+
+                    <!-- Calculate -->
                     <div class="pull-right">
                         <button class="btn btn-primary">Calculate</button>
                     </div>
                 </div>
             </form>
+
             <!-- results -->
             <div class="section row" ng-show="results.statements.length > 0">
                 <fieldset>
                     <legend>Payments</legend>
                     <!-- chart -->
                     <div>
+                        <!--trying different third-party chart directives-->
                         <!--angles-->
                         <!--<canvas chart="Line" options="options" data="results.chart" width="500" height="300"></canvas>-->
                         <!--chartjs-directive-->
@@ -160,6 +175,7 @@
                         <!--manual-->
                         <!--<canvas id="myChart" width="400" height="400"></canvas>-->
                     </div>
+
                     <!-- tables -->
                     <div class="statements">
                         <div class="statement pull-left" ng-repeat="statement in results.statements">
