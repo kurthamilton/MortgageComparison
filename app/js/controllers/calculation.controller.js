@@ -12,6 +12,7 @@
                 save: saveModel,
                 submit: submit
             },
+            change: changeForm,
             maxApr: function() {
                 if ($scope.model.balance > 0 && $scope.model.payment > 0) {
                     return ($scope.model.payment / $scope.model.balance) * 12 * 100;
@@ -34,6 +35,10 @@
             }
             cleanForm();
         });
+
+        function changeForm() {
+            submit();
+        }
 
         function cleanForm() {
             ValidationService.resetForm($scope.form);
