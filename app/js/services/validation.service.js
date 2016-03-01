@@ -4,8 +4,32 @@
     angular.module('app').service('ValidationService', () => new ValidationService());
 
     class ValidationService {
+        resetForm(form) {
+            form.$setPristine();
+            form.$setUntouched();
+        }
+
         showError(element) {
-            return element.$invalid && (element.$touched || element.$$parentForm.$submitted);
+            if (element.$invalid === false) {
+                return false;
+            }
+            if (element.$touched === true) {
+                return true;
+            }
+
+            let form = element.$$parentForm;
+            while (form) {
+                if (form.$submitted === true) {
+                    return true;
+                }
+                form = form.$$parentForm;
+            };
+
+            return false;
+        }
+
+        submitForm (form) {
+            form.$setSubmitted();
         }
     }
 })();

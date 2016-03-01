@@ -35,7 +35,7 @@
     <body>
         <div class="container" ng-controller="CalculationController">
             <!-- form -->
-            <form name="form" novalidate ng-submit="actions.onSubmitted(form)">
+            <form name="form" novalidate ng-submit="actions.submit()">
                 <!-- global mortgage details -->
                 <div class="section row form-inline">
                     <div class="form-group required" ng-class="{ 'has-error': showError(form.balance) }">
@@ -91,7 +91,7 @@
                                     <th></th>
                                 </tr>
                             </thead>
-                            <tbody data-as-sortable="sortOptions" data-ng-model="model.mortgages">
+                            <tbody data-ng-model="model.mortgages" data-as-sortable>
                                 <tr ng-form="mortgageForm" ng-repeat="mortgage in model.mortgages" data-as-sortable-item>
                                     <td title="Reorder" class="as-sortable-item-handle" data-as-sortable-item-handle>
                                         <span class="text-muted glyphicon glyphicon-move" aria-hidden="true"></span>

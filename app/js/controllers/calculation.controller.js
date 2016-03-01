@@ -9,43 +9,50 @@
             actions: {
                 add: ComparisonService.add,
                 delete: ComparisonService.remove,
-                onSubmitted: onSubmitted
+                submit: submit
             },
             model: ComparisonService.model,
             results: ResultsService.results,
             showError: ValidationService.showError
         });
 
-        $scope.sortOptions = {
-            //restrict move across columns. move only within column.
-            /*accept: function (sourceItemHandleScope, destSortableScope) {
-            return sourceItemHandleScope.itemScope.sortableScope.$id === destSortableScope.$id;
-            },*/
-            itemMoved: function (event) {
-                event.source.itemScope.modelValue.status = event.dest.sortableScope.$parent.column.name;
-            },
-            orderChanged: function (event) {
+        // Run the results if the form is valid
+        // Use form ready to wait for child forms to load before validating
+        angular.element($scope.form).ready(function() {
+            if (validate()) {
+                updateResults();
+                // the updated results aren't digested when called in the ready function.
+                // Not sure this is the right way to do this.
+                $scope.$digest();
             }
-        };
+            cleanForm();
+        });
 
-        if (ComparisonService.validMortgages().length > 0) {
-            updateResults();
-        }
-
-        function onSubmitted(form) {
-            saveModel();
-            if (!form.$valid) {
-                return;
-            }
-            updateResults();
+        function cleanForm() {
+            ValidationService.resetForm($scope.form);
         }
 
         function saveModel() {
             ComparisonService.save();
         }
 
+        function submit() {
+            saveModel();
+            if (!validate()) {
+                return;
+            }
+            updateResults();
+            cleanForm();
+        }
+
         function updateResults() {
             ResultsService.update(ComparisonService.model);
+            cleanForm();
+        }
+
+        function validate() {
+            ValidationService.submitForm($scope.form);
+            return $scope.form.$valid;
         }
     }
 })();
