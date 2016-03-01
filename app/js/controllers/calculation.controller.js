@@ -9,6 +9,7 @@
             actions: {
                 add: ComparisonService.add,
                 delete: ComparisonService.remove,
+                save: saveModel,
                 submit: submit
             },
             maxApr: function() {
