@@ -12,6 +12,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
         <script src="js/lib/angles.js"></script>
         <script src="js/lib/angular-chart.js"></script>
+        <script src="js/lib/angular-chartjs.js"></script>
         <script src="js/lib/chartjs-directive.js"></script>
         <script src="js/lib/ng-sortable.js"></script>
         <!--app-->
@@ -21,6 +22,7 @@
         <script src="app/js/directives/form.group.directive.js"></script>
         <script src="app/js/directives/isolate.form.directive.js"></script>
         <!--models-->
+        <script src="app/js/models/chart-data.js"></script>
         <script src="app/js/models/mortgage.js"></script>
         <script src="app/js/models/statement.js"></script>
         <script src="app/js/models/statement-period.js"></script>
@@ -171,10 +173,14 @@
                         <!--<chart value="results.chart"></chart>-->
                         <!--angular-chart-->
                         <canvas id="chart" class="chart chart-line"
-                            chart-data="results.chart.data" chart-labels="results.chart.labels" chart-legend="true" chart-series="results.chart.series">
+                            chart-data="results.chartData.data" chart-labels="results.chartData.labels" chart-legend="true" chart-series="results.chartData.series">
                         </canvas>
                         <!--manual-->
-                        <!--<canvas id="myChart" width="400" height="400"></canvas>-->
+                        <!--<div class="chart-container">
+                            <canvas id="myChart" width="400" height="400"></canvas>
+                        </div>-->
+                        <!--angular-chartjs-->
+                        <!--<cjs-line dataset="results.chartData"></cjs-line>-->
                     </div>
 
                     <!-- tables -->
