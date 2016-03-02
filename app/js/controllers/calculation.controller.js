@@ -32,7 +32,9 @@
         });
 
         function changeForm() {
-            submit();
+            if ($scope.form.$valid) {
+                submit();
+            }
         }
 
         function cleanForm() {
@@ -52,18 +54,8 @@
             cleanForm();
         }
 
-        function updateChart() {
-            let myChart = document.getElementById('myChart');
-            if (!myChart) {
-                return;
-            }
-            let ctx = myChart.getContext('2d');
-            let chart = new Chart(ctx).Line(ResultsService.results.chartData);
-        }
-
         function updateResults() {
             ResultsService.update(ComparisonService.model);
-            updateChart();
             cleanForm();
         }
 
