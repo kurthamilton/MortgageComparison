@@ -27,7 +27,7 @@
                         period.addFee(mortgage.fee, mortgage.includeFee)
                         period.makePayment(mortgage.lumpSumOverpayment);
                     }
-                    period.addInterest(mortgage.monthlyRate);
+                    period.addInterest(mortgage.monthlyRate());
                     period.makePayment(monthlyPayment);
                     period.makePayment(mortgage.monthlyOverpayment);
                     statement.addPeriod(period);

@@ -3,33 +3,34 @@
 
     angular.module('app').service('ValidationService', () => new ValidationService());
 
-    class ValidationService {
-        resetForm(form) {
-            form.$setPristine();
-            form.$setUntouched();
-        }
+    function ValidationService() {
+    }
 
-        showError(element) {
-            if (element.$invalid === false) {
-                return false;
-            }
-            if (element.$touched === true) {
-                return true;
-            }
+    ValidationService.prototype.resetForm = function(form) {
+        form.$setPristine();
+        form.$setUntouched();
+    };
 
-            let form = element.$$parentForm;
-            while (form) {
-                if (form.$submitted === true) {
-                    return true;
-                }
-                form = form.$$parentForm;
-            };
-
+    ValidationService.prototype.showError = function(element) {
+        if (element.$invalid === false) {
             return false;
         }
-
-        submitForm (form) {
-            form.$setSubmitted();
+        if (element.$touched === true) {
+            return true;
         }
-    }
+
+        let form = element.$$parentForm;
+        while (form) {
+            if (form.$submitted === true) {
+                return true;
+            }
+            form = form.$$parentForm;
+        };
+
+        return false;
+    };
+
+    ValidationService.prototype.submitForm = function(form) {
+        form.$setSubmitted();
+    };
 })();

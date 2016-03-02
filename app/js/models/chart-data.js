@@ -3,25 +3,23 @@
 
     angular.module('app').factory('ChartData', () => ChartData);
 
-    class ChartData {
-        constructor() {
-            this.labels = [];
-            this.datasets = [];
-            this.data = [];
-            this.series = [];
-        }
+    function ChartData() {
+        this.labels = [];
+        this.datasets = [];
+        this.data = [];
+        this.series = [];
+    }
 
-        addDataset(label, data) {
+    ChartData.prototype.addDataset = function(label, data) {
             this.datasets.push({
                 label: label,
                 data: data
             });
             this.series.push(label);
             this.data.push(data);
-        }
+    };
 
-        addLabel(label) {
-            this.labels.push(label);
-        }
+    ChartData.prototype.addLabel = function(label) {
+        this.labels.push(label);
     };
 })();
