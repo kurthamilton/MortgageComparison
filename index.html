@@ -3,7 +3,7 @@
     <head>
         <!--styles-->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="css/lib/angular-chart.min.css" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/angular.chartjs/0.8.8/angular-chart.min.css" />
         <link rel="stylesheet" href="css/lib/ng-sortable.css" />
         <link rel="stylesheet" href="css/main.css" />
         <!--scripts-->
@@ -11,7 +11,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
         <script src="js/lib/angles.js"></script>
-        <script src="js/lib/angular-chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/angular.chartjs/0.8.8/angular-chart.min.js"></script>
         <script src="js/lib/angular-chartjs.js"></script>
         <script src="js/lib/chartjs-directive.js"></script>
         <script src="js/lib/ng-sortable.js"></script>
@@ -166,21 +166,9 @@
                     <legend>Payments</legend>
                     <!-- chart -->
                     <div>
-                        <!--trying different third-party chart directives-->
-                        <!--angles-->
-                        <!--<canvas chart="Line" options="options" data="results.chart" width="500" height="300"></canvas>-->
-                        <!--chartjs-directive-->
-                        <!--<chart value="results.chart"></chart>-->
-                        <!--angular-chart-->
                         <canvas id="chart" class="chart chart-line"
                             chart-data="results.chartData.data" chart-labels="results.chartData.labels" chart-legend="true" chart-series="results.chartData.series">
                         </canvas>
-                        <!--manual-->
-                        <!--<div class="chart-container">
-                            <canvas id="myChart" width="400" height="400"></canvas>
-                        </div>-->
-                        <!--angular-chartjs-->
-                        <!--<cjs-line dataset="results.chartData"></cjs-line>-->
                     </div>
 
                     <!-- tables -->
